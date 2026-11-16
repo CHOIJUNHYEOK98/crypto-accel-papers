@@ -31,7 +31,7 @@ PARTS = [  # (kind, 앵커, 제목)
 PREPRINT_LEAD = "학회·저널 게재를 확인하지 못한 IACR ePrint·arXiv 원고다."
 VENUE_KEYS = {"id", "abbr", "name", "kind", "group", "bk21", "kiise"}
 PAPER_KEYS = {"title", "authors", "year", "venue", "field", "device", "url", "gpu_partial", "note",
-              "zkp_system", "zkp_ops", "focus"}
+              "zkp_system", "zkp_ops", "sys_opt", "focus"}
 
 
 def esc(s):
@@ -48,6 +48,7 @@ def load():
     zkp = yaml.safe_load((ROOT / "data" / "zkp.yml").read_text(encoding="utf-8"))
     sys_keys = [x["key"] for x in zkp["systems"]]
     op_keys = [x["key"] for x in zkp["ops"]]
+    so_keys = [x["key"] for x in zkp["sys_opts"]]
     errors = []
     ids = set()
     for v in venues:
@@ -96,8 +97,14 @@ def load():
                     errors.append(f"{where}: ZKP 논문은 {k} 목록이 필요하다")
                 elif set(vals) - set(allowed):
                     errors.append(f"{where}: {k} 의 {sorted(set(vals) - set(allowed))} 가 data/zkp.yml 에 없다")
+            if "sys_opt" in p:
+                vals = p["sys_opt"]
+                if not isinstance(vals, list) or not vals:
+                    errors.append(f"{where}: sys_opt 는 비어 있지 않은 목록(없으면 칸을 지운다)")
+                elif set(vals) - set(so_keys):
+                    errors.append(f"{where}: sys_opt 의 {sorted(set(vals) - set(so_keys))} 가 data/zkp.yml 에 없다")
         else:
-            for k in ("zkp_system", "zkp_ops"):
+            for k in ("zkp_system", "zkp_ops", "sys_opt"):
                 if k in p:
                     errors.append(f"{where}: {k} 는 ZKP 논문에만 쓴다")
         if "focus" in p and not isinstance(p["focus"], str):
@@ -118,11 +125,14 @@ def paper_li(p, zkp):
     if p.get("zkp_system"):
         sl = {x["key"]: x["label"] for x in zkp["systems"]}
         ol = {x["key"]: x["label"] for x in zkp["ops"]}
-        labels = [sl[k] for k in p["zkp_system"]] + [ol[k] for k in p["zkp_ops"]]
+        so = {x["key"]: x["label"] for x in zkp["sys_opts"]}
+        sys_opt = p.get("sys_opt", [])
+        labels = [sl[k] for k in p["zkp_system"]] + [ol[k] for k in p["zkp_ops"]] + [so[k] for k in sys_opt]
         q += " " + " ".join(labels).lower()
         sattr = f' data-s="{" ".join(p["zkp_system"])}"'
         extra += ('<span class="zk">' + "".join(f'<span class="sys">{esc(sl[k])}</span>' for k in p["zkp_system"])
-                  + "".join(f'<span class="op">{esc(ol[k])}</span>' for k in p["zkp_ops"]) + "</span>")
+                  + "".join(f'<span class="op">{esc(ol[k])}</span>' for k in p["zkp_ops"])
+                  + "".join(f'<span class="so">{esc(so[k])}</span>' for k in sys_opt) + "</span>")
     if p.get("focus"):
         q += " " + p["focus"].lower()
         extra += f'<span class="fo">{esc(p["focus"])}</span>'
@@ -200,12 +210,18 @@ def render(venues, papers, zkp):
         f'      <span><i class="dot d-{k}"></i>{h} <b>{total[k]}</b></span>' for k, _, h in FIELDS[:3])
     zp = [p for p in papers if p["field"] == "zkp"]
     cnt = Counter(k for p in zp for k in p["zkp_system"])
+    socnt = Counter(k for p in zp for k in p.get("sys_opt", []))
     systems = [x for x in zkp["systems"] if cnt[x["key"]]]
     guide = ('  <section class="guide" id="zkp-guide"><h2>ZKP 증명 체계 계열과 부하 연산</h2>'
-             '<p class="lead">ZKP 논문마다 증명 체계 계열(주황 테두리), 가속한 연산(회색 바탕), 핵심 아이디어(아래 줄)를 적었습니다. '
+             '<p class="lead">ZKP 논문마다 증명 체계 계열(주황 테두리), 가속한 연산(회색 바탕), 시스템 관점 최적화(점선 테두리), 핵심 아이디어(아래 줄)를 적었습니다. '
              '여러 체계로 평가한 논문은 계열을 여럿 적었습니다. 아래 표의 부하 연산은 각 계열의 증명 생성에서 시간을 많이 쓰는 연산과 그 근거입니다.</p>'
              '<div class="tablewrap"><table class="mat"><thead><tr><th>계열</th><th>부하 연산</th><th>편수</th></tr></thead><tbody>'
              + "".join(f'<tr><th>{esc(x["label"])}</th><td>{esc(x["load"])}</td><td class="n">{cnt[x["key"]]}</td></tr>' for x in systems)
+             + "</tbody></table></div>"
+             '<h3>시스템 관점 최적화</h3><p class="lead">연산 알고리즘 자체가 아니라 실행 구조·자원 활용을 바꾼 최적화입니다.</p>'
+             '<div class="tablewrap"><table class="mat"><thead><tr><th>항목</th><th>뜻</th><th>편수</th></tr></thead><tbody>'
+             + "".join(f'<tr><th><span class="so">{esc(x["label"])}</span></th><td>{esc(x["desc"])}</td><td class="n">{socnt[x["key"]]}</td></tr>'
+                       for x in zkp["sys_opts"] if socnt[x["key"]])
              + "</tbody></table></div></section>")
     select = ('    <select id="sys" aria-label="ZKP 증명 체계 계열로 거르기"><option value="all">ZKP 계열 전체</option>'
               + "".join(f'<option value="{x["key"]}">{esc(x["label"])} ({cnt[x["key"]]})</option>' for x in systems)

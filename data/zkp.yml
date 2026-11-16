@@ -1,5 +1,5 @@
 # ZKP 논문의 증명 체계 계열(systems)과 가속 연산(ops) 이름표.
-# papers.yml 의 zkp_system·zkp_ops 칸은 여기 key 만 쓴다.
+# papers.yml 의 zkp_system·zkp_ops·sys_opt 칸은 여기 key 만 쓴다.
 # load: 그 계열 증명 생성에서 시간을 많이 쓰는 연산(근거 논문과 함께). 비율을 확인하지 못한 계열은 그렇다고 적는다.
 systems:
   - key: groth16
@@ -38,4 +38,16 @@ ops:
   - {key: witness, label: 증인 생성}
   - {key: field, label: 유한체 산술}
   - {key: ipa, label: 내적 논증}
-  - {key: e2e, label: 전체 흐름·메모리·전송}
+sys_opts:   # 연산 알고리즘이 아니라 실행 구조·자원 활용 쪽의 최적화
+  - {key: multi-gpu, label: 다중 GPU 분할, desc: "한 증명의 연산을 여러 GPU 에 나눠 실행"}
+  - {key: multi-node, label: 다중 노드 분산, desc: "여러 서버(노드)에 작업을 나누고 결과를 모음"}
+  - {key: cpu-gpu, label: CPU-GPU 분담, desc: "일부 단계를 CPU 가 맡아 GPU 와 동시에 처리"}
+  - {key: overlap, label: 전송·계산 겹치기, desc: "여러 CUDA 스트림 등으로 호스트-장치 전송이나 GPU 간 통신을 계산과 겹침"}
+  - {key: out-of-core, label: GPU 메모리 초과 처리, desc: "입력을 조각으로 나눠 GPU 메모리보다 큰 문제를 처리(장치 밖 실행·분할 실행)"}
+  - {key: memory, label: 메모리 절감, desc: "중간값을 제자리에서 계산하거나 순서를 바꿔 최대 메모리 사용량을 줄임"}
+  - {key: resident, label: GPU 상주·전송 제거, desc: "모든 단계를 GPU 에서 돌려 중간 결과의 왕복 전송을 없앰"}
+  - {key: pipeline, label: 단계 간 파이프라인, desc: "증명 단계·라운드·여러 증명을 겹쳐 흘려 보냄"}
+  - {key: batch, label: 여러 증명 묶음 처리, desc: "증명 여러 개를 연이어 처리해 처리량을 높임"}
+  - {key: fusion, label: 커널 융합, desc: "여러 커널을 하나로 합쳐 전역 메모리 왕복을 줄임"}
+  - {key: tuning, label: 매개변수 자동 선택, desc: "비용 모델이나 실측으로 창 크기·분할 크기 등을 고름"}
+  - {key: hw-unit, label: 특수 연산 장치 활용, desc: "텐서 코어처럼 원래 다른 용도인 GPU 장치를 암호 연산에 씀"}
