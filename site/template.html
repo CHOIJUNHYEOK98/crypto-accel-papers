@@ -81,6 +81,18 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .empty{color:var(--muted);font-size:.9rem}
 @media (max-width:520px){.au{display:block;margin-left:0}.nav{margin-left:0}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.zk{display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px;margin-top:3px}
+.sys{font-size:.74rem;font-weight:600;color:var(--zkp);border:1px solid var(--zkp);border-radius:4px;padding:0 6px}
+.op{font-size:.72rem;color:var(--muted);background:var(--accent-soft);border-radius:4px;padding:0 6px}
+.fo{display:block;font-size:.84rem;color:var(--fg);opacity:.85;margin-top:2px}
+.guide{display:flex;flex-direction:column;gap:10px}
+.guide h2{font-size:1.1rem}
+.guide .mat{min-width:640px}
+.guide .mat th,.guide .mat td{text-align:left;vertical-align:top}
+.guide .mat td{font-family:var(--f-body);font-size:.86rem;line-height:1.55}
+.guide .mat td.n{font-family:var(--f-mono);text-align:right;white-space:nowrap}
+#sys{font:inherit;font-size:.86rem;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:6px;padding:4px 8px;max-width:100%}
+#sys:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 </style>
 
 <div class="wrap">
@@ -97,12 +109,15 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     {{table}}
   </section>
 
+{{zkpguide}}
+
   <div class="bar" role="search">
     <button class="chip" type="button" id="f-all" data-f="all" aria-pressed="true">전체</button>
     <button class="chip" type="button" id="f-pqc" data-f="pqc" aria-pressed="false"><i class="dot d-pqc"></i>PQC</button>
     <button class="chip" type="button" id="f-zkp" data-f="zkp" aria-pressed="false"><i class="dot d-zkp"></i>ZKP</button>
     <button class="chip" type="button" id="f-fhe" data-f="fhe" aria-pressed="false"><i class="dot d-fhe"></i>FHE</button>
-    <input id="q" type="search" placeholder="제목·저자 검색 (예: NTT, MSM, bootstrapping)" aria-label="제목·저자 검색">
+{{sysselect}}
+    <input id="q" type="search" placeholder="제목·저자·핵심 검색 (예: NTT, MSM, bootstrapping)" aria-label="제목·저자 검색">
     <nav class="nav"><a href="#conf">학회</a><a href="#jour">저널</a><a href="#preprint">예비 공개본</a></nav>
   </div>
   <p class="empty" id="empty" hidden>조건에 맞는 논문이 없습니다.</p>
@@ -127,10 +142,12 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   var chips=[].slice.call(document.querySelectorAll('.chip'));
   var q=document.getElementById('q');
   var f='all';
+  var sel=document.getElementById('sys');
   function apply(){
     var term=(q.value||'').trim().toLowerCase(), shown=0;
     document.querySelectorAll('.dom li').forEach(function(li){
-      var ok=(f==='all'||li.dataset.d===f)&&(!term||li.dataset.q.indexOf(term)>=0);
+      var sv=sel?sel.value:'all';
+      var ok=(f==='all'||li.dataset.d===f)&&(!term||li.dataset.q.indexOf(term)>=0)&&(sv==='all'||(' '+(li.dataset.s||'')+' ').indexOf(' '+sv+' ')>=0);
       li.hidden=!ok; if(ok) shown++;
     });
     document.querySelectorAll('.dom').forEach(function(d){d.hidden=!d.querySelector('li:not([hidden])');});
@@ -146,5 +163,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     f=c.dataset.f; chips.forEach(function(x){x.setAttribute('aria-pressed',x===c?'true':'false');}); apply();
   });});
   q.addEventListener('input',apply);
+  if(sel) sel.addEventListener('change',apply);
 })();
 </script>

@@ -3,12 +3,16 @@
 # field: pqc(양자내성암호)·zkp(영지식 증명)·fhe(완전 동형암호)·ntt(PQC·FHE 공통 연산)
 # device: gpu·tpu·npu (지금 페이지는 gpu 만 싣는다)
 # gpu_partial: true 면 "GPU 평가 포함"(응용 시스템 논문에서 GPU 구현·평가가 일부) / note: 제목 옆 짧은 메모
+# ZKP 논문(field: zkp)만: zkp_system(증명 체계 계열)·zkp_ops(가속한 연산) — 값은 data/zkp.yml 의 key. focus: 핵심 아이디어나 대상 한 줄
 
 - title: Accelerating Number Theoretic Transform with Multi-GPU Systems for Efficient Zero Knowledge Proof
   authors: [Zhuoran Ji, Jianyu Zhao, Peimin Gao, Xiangkai Yin, Lei Ju]
   year: 2025
   venue: asplos
   field: zkp
+  zkp_system: [plonk]
+  zkp_ops: [ntt]
+  focus: 다중 GPU NTT — 회전 인자 곱 없는 재귀 분해, GPU 간 전치와 계산 겹치기
   device: gpu
   url: https://doi.org/10.1145/3669940.3707241
 
@@ -17,6 +21,9 @@
   year: 2025
   venue: asplos
   field: zkp
+  zkp_system: [sumcheck-hash]
+  zkp_ops: [sumcheck, hash, spmv, e2e]
+  focus: 여러 증명을 연이어 만드는 단계별 커널 파이프라인
   device: gpu
   url: https://doi.org/10.1145/3669940.3707270
 
@@ -25,6 +32,9 @@
   year: 2024
   venue: asplos
   field: zkp
+  zkp_system: [kernel]
+  zkp_ops: [msm, field]
+  focus: 다중 GPU MSM — 창 안 버킷을 GPU 마다 나눔, 텐서 코어 몽고메리 곱
   device: gpu
   url: https://doi.org/10.1145/3620666.3651364
 
@@ -33,6 +43,9 @@
   year: 2023
   venue: asplos
   field: zkp
+  zkp_system: [groth16]
+  zkp_ops: [msm, ntt, field]
+  focus: 창을 합친 MSM·버킷 부하 균형, 전역 셔플 없는 NTT
   device: gpu
   url: https://doi.org/10.1145/3575693.3575711
 
@@ -146,6 +159,9 @@
   year: 2025
   venue: iiswc
   field: zkp
+  zkp_system: [groth16]
+  zkp_ops: [msm, ntt]
+  focus: GPU 증명 성능 분석 — MSM 가속 뒤 NTT 가 지연의 최대 90%
   device: gpu
   url: https://doi.org/10.1109/iiswc66894.2025.00021
 
@@ -170,6 +186,9 @@
   year: 2026
   venue: ics
   field: zkp
+  zkp_system: [plonkish-fri]
+  zkp_ops: [witness, ntt, hash, e2e]
+  focus: 증명 전 단계를 GPU 에 상주, 제자리 저차 확장으로 메모리 절감
   device: gpu
   url: https://doi.org/10.1145/3797905.3807842
 
@@ -210,6 +229,9 @@
   year: 2026
   venue: ppopp
   field: zkp
+  zkp_system: [plonk]
+  zkp_ops: [ntt, msm, e2e]
+  focus: GPU 메모리를 넘는 PLONK 를 분할 실행·라운드 교차 파이프라인으로
   device: gpu
   url: https://doi.org/10.1145/3774934.3786448
 
@@ -226,6 +248,9 @@
   year: 2026
   venue: hpdc
   field: zkp
+  zkp_system: [kernel]
+  zkp_ops: [msm, ntt, e2e]
+  focus: PCIe 전송과 계산을 겹치는 장치 밖 MSM·NTT
   device: gpu
   url: https://doi.org/10.1145/3806645.3820068
 
@@ -242,6 +267,9 @@
   year: 2024
   venue: ccs
   field: zkp
+  zkp_system: [gkr-hyrax]
+  zkp_ops: [sumcheck, msm]
+  focus: LLM 추론 증명 — 텐서 조회 논증(tlookup)·어텐션 증명(zkAttn)
   device: gpu
   url: https://doi.org/10.1145/3658644.3670334
 
@@ -274,6 +302,9 @@
   year: 2026
   venue: usenix-sec
   field: zkp
+  zkp_system: [sumcheck-hash]
+  zkp_ops: [sumcheck, spmv, field]
+  focus: 텐서 코어로 합 검사·부호화 체 연산
   device: gpu
   url: null
 
@@ -323,6 +354,9 @@
   year: 2025
   venue: sp
   field: zkp
+  zkp_system: [folding]
+  zkp_ops: [msm]
+  focus: 동영상 진위 증명 — Nova 폴딩 개선(Loua), 약정 MSM 을 GPU 로
   device: gpu
   url: https://doi.org/10.1109/sp61157.2025.00237
   gpu_partial: true
@@ -340,6 +374,9 @@
   year: 2026
   venue: ndss
   field: zkp
+  zkp_system: [gkr-hyrax]
+  zkp_ops: [sumcheck, msm]
+  focus: LoRA 미세조정 증명 — 조회 논증으로 비선형 연산 증명
   device: gpu
   url: https://doi.org/10.14722/ndss.2026.242361
 
@@ -364,6 +401,9 @@
   year: 2026
   venue: date
   field: zkp
+  zkp_system: [binius]
+  zkp_ops: [sumcheck, field]
+  focus: 이진체 탑 합 검사 — 비트슬라이스 곱, 라운드별 계산 방식 전환
   device: gpu
   url: https://doi.org/10.23919/date69613.2026.11539722
 
@@ -453,6 +493,9 @@
   year: 2024
   venue: tches
   field: zkp
+  zkp_system: [kernel]
+  zkp_ops: [msm]
+  focus: 사전계산으로 MSM 규모·스칼라 길이를 조절하는 탄력적 전처리
   device: gpu
   url: https://doi.org/10.46586/tches.v2024.i4.258-284
 
@@ -461,6 +504,9 @@
   year: 2024
   venue: tches
   field: zkp
+  zkp_system: [kernel]
+  zkp_ops: [msm]
+  focus: 버킷 수 1/4 축소·지연 축약·부하 균형 버킷 누적
   device: gpu
   url: https://doi.org/10.46586/tches.v2024.i2.522-544
 
@@ -469,6 +515,9 @@
   year: 2023
   venue: tches
   field: zkp
+  zkp_system: [groth16]
+  zkp_ops: [msm, ntt, spmv]
+  focus: MSM 버킷 모으기를 희소 행렬-벡터 곱으로 바꾼 병렬 MSM
   device: gpu
   url: https://doi.org/10.46586/tches.v2023.i3.194-220
 
@@ -687,6 +736,9 @@
   year: 2024
   venue: tifs
   field: zkp
+  zkp_system: [gkr-hyrax]
+  zkp_ops: [sumcheck]
+  focus: 딥러닝 학습 증명 — ReLU 증명(zkReLU), 층·단계 집계 합 검사
   device: gpu
   url: https://doi.org/10.1109/tifs.2024.3520863
 
@@ -785,6 +837,9 @@
   year: 2026
   venue: taco
   field: zkp
+  zkp_system: [groth16]
+  zkp_ops: [msm, ntt, spmv, e2e]
+  focus: VRAM 을 넘는 대규모 MSM 의 타일 분해, 디스크→VRAM 파이프라인
   device: gpu
   url: https://doi.org/10.1145/3857809
 
@@ -889,6 +944,9 @@
   year: 2023
   venue: jpdc
   field: zkp
+  zkp_system: [groth16]
+  zkp_ops: [ntt, field]
+  focus: PTX 자리올림 몽고메리 곱, 공유 메모리 NTT
   device: gpu
   url: https://doi.org/10.1016/j.jpdc.2022.10.009
 
@@ -897,6 +955,9 @@
   year: 2023
   venue: jsa
   field: zkp
+  zkp_system: [bulletproofs]
+  zkp_ops: [ipa, e2e]
+  focus: CPU-GPU 협력 Bulletproofs 내적 논증
   device: gpu
   url: https://doi.org/10.1016/j.sysarc.2022.102807
 
@@ -905,6 +966,9 @@
   year: 2025
   venue: integration
   field: zkp
+  zkp_system: [kernel]
+  zkp_ops: [msm]
+  focus: 다중 노드 3단 MSM 분할
   device: gpu
   url: https://doi.org/10.1016/j.vlsi.2024.102286
 
@@ -929,6 +993,9 @@
   year: 2026
   venue: preprint
   field: zkp
+  zkp_system: [plonk]
+  zkp_ops: [msm]
+  focus: GPU PLONK 구현의 메모리 병목 분석
   device: gpu
   url: https://arxiv.org/abs/2611.09569
 

@@ -30,7 +30,8 @@ PARTS = [  # (kind, 앵커, 제목)
 ]
 PREPRINT_LEAD = "학회·저널 게재를 확인하지 못한 IACR ePrint·arXiv 원고다."
 VENUE_KEYS = {"id", "abbr", "name", "kind", "group", "bk21", "kiise"}
-PAPER_KEYS = {"title", "authors", "year", "venue", "field", "device", "url", "gpu_partial", "note"}
+PAPER_KEYS = {"title", "authors", "year", "venue", "field", "device", "url", "gpu_partial", "note",
+              "zkp_system", "zkp_ops", "focus"}
 
 
 def esc(s):
@@ -44,6 +45,9 @@ def attr(s):
 def load():
     venues = yaml.safe_load((ROOT / "data" / "venues.yml").read_text(encoding="utf-8"))
     papers = yaml.safe_load((ROOT / "data" / "papers.yml").read_text(encoding="utf-8"))
+    zkp = yaml.safe_load((ROOT / "data" / "zkp.yml").read_text(encoding="utf-8"))
+    sys_keys = [x["key"] for x in zkp["systems"]]
+    op_keys = [x["key"] for x in zkp["ops"]]
     errors = []
     ids = set()
     for v in venues:
@@ -85,17 +89,44 @@ def load():
             errors.append(f"{where}: year 는 정수")
         if not isinstance(p.get("authors"), list):
             errors.append(f"{where}: authors 는 목록([이름, 이름])")
+        if p.get("field") == "zkp":
+            for k, allowed in (("zkp_system", sys_keys), ("zkp_ops", op_keys)):
+                vals = p.get(k)
+                if not isinstance(vals, list) or not vals:
+                    errors.append(f"{where}: ZKP 논문은 {k} 목록이 필요하다")
+                elif set(vals) - set(allowed):
+                    errors.append(f"{where}: {k} 의 {sorted(set(vals) - set(allowed))} 가 data/zkp.yml 에 없다")
+        else:
+            for k in ("zkp_system", "zkp_ops"):
+                if k in p:
+                    errors.append(f"{where}: {k} 는 ZKP 논문에만 쓴다")
+        if "focus" in p and not isinstance(p["focus"], str):
+            errors.append(f"{where}: focus 는 한 줄 문자열")
         key = " ".join(str(p.get("title", "")).lower().split())
         if key in seen:
             errors.append(f"{where}: 제목이 {seen[key]}번째 논문과 같다")
         seen[key] = i + 1
     if errors:
         sys.exit("자료 오류:\n  " + "\n  ".join(errors))
-    return venues, papers
+    return venues, papers, zkp
 
 
-def paper_li(p):
+def paper_li(p, zkp):
     q = p["title"].lower() + " " + ", ".join(a.lower() for a in p["authors"])
+    extra = ""
+    sattr = ""
+    if p.get("zkp_system"):
+        sl = {x["key"]: x["label"] for x in zkp["systems"]}
+        ol = {x["key"]: x["label"] for x in zkp["ops"]}
+        labels = [sl[k] for k in p["zkp_system"]] + [ol[k] for k in p["zkp_ops"]]
+        q += " " + " ".join(labels).lower()
+        sattr = f' data-s="{" ".join(p["zkp_system"])}"'
+        extra += ('<span class="zk">' + "".join(f'<span class="sys">{esc(sl[k])}</span>' for k in p["zkp_system"])
+                  + "".join(f'<span class="op">{esc(ol[k])}</span>' for k in p["zkp_ops"]) + "</span>")
+    if p.get("focus"):
+        q += " " + p["focus"].lower()
+        extra += f'<span class="fo">{esc(p["focus"])}</span>'
+
     au = p["authors"][0] + (" 외" if len(p["authors"]) > 1 else "")
     title = esc(p["title"])
     if p["url"]:
@@ -105,11 +136,11 @@ def paper_li(p):
         tags += '<span class="tag tag-part">GPU 평가 포함</span>'
     if p.get("note"):
         tags += f'<span class="tag">{esc(p["note"])}</span>'
-    return (f'<li data-d="{p["field"]}" data-q="{attr(q)}"><span class="yr">{p["year"]}</span>'
-            f'<span class="ti">{title}<span class="au">{esc(au)}</span>{tags}</span></li>')
+    return (f'<li data-d="{p["field"]}"{sattr} data-q="{attr(q)}"><span class="yr">{p["year"]}</span>'
+            f'<span class="ti">{title}<span class="au">{esc(au)}</span>{tags}{extra}</span></li>')
 
 
-def venue_section(v, ps):
+def venue_section(v, ps, zkp):
     head = f'<h4>{esc(v["abbr"])}</h4>'
     if v.get("bk21"):
         head += (f'<span class="bk bk{v["bk21"]}" title="BK21플러스 IF (2018) {v["bk21"]}점">'
@@ -125,11 +156,11 @@ def venue_section(v, ps):
         if not fp:
             continue
         body += (f'<div class="dom" data-d="{key}"><h5><span class="dot d-{key}"></span>{label} '
-                 f'<span class="cnt">{len(fp)}</span></h5><ul>' + "".join(paper_li(p) for p in fp) + "</ul></div>")
+                 f'<span class="cnt">{len(fp)}</span></h5><ul>' + "".join(paper_li(p, zkp) for p in fp) + "</ul></div>")
     return f'<section class="venue"{idattr}><header class="vh">{head}</header>{body}</section>'
 
 
-def render(venues, papers):
+def render(venues, papers, zkp):
     papers = [p for p in papers if p["device"] == "gpu"]
     by_venue = {}
     for p in papers:
@@ -145,7 +176,7 @@ def render(venues, papers):
         if kind == "preprint":
             rows.append((title, Counter(p["field"] for v in vs for p in by_venue[v["id"]])))
             s += f'<p class="lead">{PREPRINT_LEAD}</p><div class="venues">'
-            s += "".join(venue_section(v, by_venue[v["id"]]) for v in vs) + "</div>"
+            s += "".join(venue_section(v, by_venue[v["id"]], zkp) for v in vs) + "</div>"
         else:
             groups = []
             for v in vs:
@@ -155,7 +186,7 @@ def render(venues, papers):
                 gv = [v for v in vs if v["group"] == g]
                 rows.append((f"{title} · {g}", Counter(p["field"] for v in gv for p in by_venue[v["id"]])))
                 s += f'<h3>{esc(g)}</h3><div class="venues">'
-                s += "".join(venue_section(v, by_venue[v["id"]]) for v in gv) + "</div>"
+                s += "".join(venue_section(v, by_venue[v["id"]], zkp) for v in gv) + "</div>"
         parts_html.append(s + "</section>")
 
     def cells(c):
@@ -167,13 +198,26 @@ def render(venues, papers):
              + f'<tr class="total"><th>합계</th>{cells(total)}</tr></tbody></table></div>')
     kpis = f"      <span>전체 <b>{len(papers)}</b>편</span>\n" + "\n".join(
         f'      <span><i class="dot d-{k}"></i>{h} <b>{total[k]}</b></span>' for k, _, h in FIELDS[:3])
+    zp = [p for p in papers if p["field"] == "zkp"]
+    cnt = Counter(k for p in zp for k in p["zkp_system"])
+    systems = [x for x in zkp["systems"] if cnt[x["key"]]]
+    guide = ('  <section class="guide" id="zkp-guide"><h2>ZKP 증명 체계 계열과 부하 연산</h2>'
+             '<p class="lead">ZKP 논문마다 증명 체계 계열(주황 테두리), 가속한 연산(회색 바탕), 핵심 아이디어(아래 줄)를 적었습니다. '
+             '여러 체계로 평가한 논문은 계열을 여럿 적었습니다. 아래 표의 부하 연산은 각 계열의 증명 생성에서 시간을 많이 쓰는 연산과 그 근거입니다.</p>'
+             '<div class="tablewrap"><table class="mat"><thead><tr><th>계열</th><th>부하 연산</th><th>편수</th></tr></thead><tbody>'
+             + "".join(f'<tr><th>{esc(x["label"])}</th><td>{esc(x["load"])}</td><td class="n">{cnt[x["key"]]}</td></tr>' for x in systems)
+             + "</tbody></table></div></section>")
+    select = ('    <select id="sys" aria-label="ZKP 증명 체계 계열로 거르기"><option value="all">ZKP 계열 전체</option>'
+              + "".join(f'<option value="{x["key"]}">{esc(x["label"])} ({cnt[x["key"]]})</option>' for x in systems)
+              + "</select>")
     tpl = TEMPLATE.read_text(encoding="utf-8")
-    return tpl.replace("{{kpis}}", kpis).replace("{{table}}", table).replace("{{parts}}", "\n".join(parts_html))
+    return (tpl.replace("{{kpis}}", kpis).replace("{{table}}", table).replace("{{zkpguide}}", guide)
+            .replace("{{sysselect}}", select).replace("{{parts}}", "\n".join(parts_html)))
 
 
 def main():
-    venues, papers = load()
-    out = render(venues, papers)
+    venues, papers, zkp = load()
+    out = render(venues, papers, zkp)
     if "--check" in sys.argv:
         if not OUT.exists() or OUT.read_text(encoding="utf-8") != out:
             sys.exit("site/index.html 이 data/ 와 다르다 — python3 build.py 로 다시 만들어 함께 커밋한다")
