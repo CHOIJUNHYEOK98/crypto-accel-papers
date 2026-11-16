@@ -1,0 +1,965 @@
+# 논문 목록 — 순서는 상관없다(페이지는 출판처 → 분야 → 연도 내림차순 → 제목순으로 정렬한다).
+# title·authors·year·venue·field·device·url 은 필수. url 이 없으면 null.
+# field: pqc(양자내성암호)·zkp(영지식 증명)·fhe(완전 동형암호)·ntt(PQC·FHE 공통 연산)
+# device: gpu·tpu·npu (지금 페이지는 gpu 만 싣는다)
+# gpu_partial: true 면 "GPU 평가 포함"(응용 시스템 논문에서 GPU 구현·평가가 일부) / note: 제목 옆 짧은 메모
+
+- title: Accelerating Number Theoretic Transform with Multi-GPU Systems for Efficient Zero Knowledge Proof
+  authors: [Zhuoran Ji, Jianyu Zhao, Peimin Gao, Xiangkai Yin, Lei Ju]
+  year: 2025
+  venue: asplos
+  field: zkp
+  device: gpu
+  url: https://doi.org/10.1145/3669940.3707241
+
+- title: 'BatchZK: A Fully Pipelined GPU-Accelerated System for Batch Generation of Zero-Knowledge Proofs'
+  authors: [Tao Lu, Yuxun Chen, Zonghui Wang, Xiaohang Wang, Wenzhi Chen, Jiaheng Zhang]
+  year: 2025
+  venue: asplos
+  field: zkp
+  device: gpu
+  url: https://doi.org/10.1145/3669940.3707270
+
+- title: Accelerating Multi-Scalar Multiplication for Efficient Zero Knowledge Proofs with Multi-GPU Systems
+  authors: [Zhuoran Ji, Zhiyuan Zhang, Jiming Xu, Lei Ju]
+  year: 2024
+  venue: asplos
+  field: zkp
+  device: gpu
+  url: https://doi.org/10.1145/3620666.3651364
+
+- title: 'GZKP: A GPU Accelerated Zero-Knowledge Proof System'
+  authors: [Weiliang Ma, Qian Xiong, Xuanhua Shi, Xiaosong Ma, Hai Jin, Haozhao Kuang, Mingyu Gao, Ye Zhang, Haichen Shen, Weifang Hu]
+  year: 2023
+  venue: asplos
+  field: zkp
+  device: gpu
+  url: https://doi.org/10.1145/3575693.3575711
+
+- title: A Framework for Developing and Optimizing Fully Homomorphic Encryption Programs on GPUs
+  authors: [Jianyu Zhao, Xueyu Wu, Guang Fan, Mingzhe Zhang, Shoumeng Yan, Lei Ju, Zhuoran Ji]
+  year: 2026
+  venue: asplos
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1145/3779212.3790120
+
+- title: 'Cheddar: A Swift Fully Homomorphic Encryption Library Designed for GPU Architectures'
+  authors: [Wonseok Choi, Jongmin Kim, Jung Ho Ahn]
+  year: 2026
+  venue: asplos
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1145/3760250.3762223
+
+- title: 'Maverick: Rethinking TFHE Bootstrapping on GPUs via Algorithm-Hardware Co-Design'
+  authors: [Zhiwei Wang, Haoqi He, Lutan Zhao, Qingyun Niu, Dan Meng, Rui Hou]
+  year: 2026
+  venue: asplos
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1145/3779212.3790186
+
+- title: 'HERO-Sign: Hierarchical Tuning and Efficient Compiler-Time GPU Optimizations for SPHINCS+ Signature Generation'
+  authors: [Yaoyun Zhou, Qian Wang]
+  year: 2026
+  venue: hpca
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1109/HPCA68181.2026.11408484
+
+- title: 'Peregrine: Accelerating TFHE Bootstrapping on GPUs via Multi-Level External Product Co-Design'
+  authors: [Haoqi He, Zhiwei Wang, Lutan Zhao, Dian Jiao, Dan Meng, Rui Hou]
+  year: 2026
+  venue: hpca
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1109/hpca68181.2026.11408517
+
+- title: 'WarpDrive: GPU-Based Fully Homomorphic Encryption Acceleration Leveraging Tensor and CUDA Cores'
+  authors: [Fan Guang, Mingzhe Zhang, Fangyu Zheng, Shengyu Fan, Tian Zhou, Xianglong Deng, Wenxu Tang, Liang Kong, Yixuan Song, Shoumeng Yan]
+  year: 2025
+  venue: hpca
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1109/hpca61900.2025.00091
+
+- title: 'TensorFHE: Achieving Practical Computation on Encrypted Data Using GPGPU'
+  authors: [Shengyu Fan, Zhiwei Wang, Weizhi Xu, Rui Hou, Dan Meng, Mingzhe Zhang]
+  year: 2023
+  venue: hpca
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1109/hpca56546.2023.10071017
+
+- title: 'Fenc 2 : Unifying Data Packing for Efficient Private Inference via Convolution and Architecture-Aware Fragment Encoding'
+  authors: [Ran Ran, Zhaoting Gong, Nuo Xu, Yuanchao Xu, Fan Yao, Wujie Wen]
+  year: 2026
+  venue: isca
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1109/isca66397.2026.00136
+  gpu_partial: true
+
+- title: 'HyperDrive: Hierarchical Exploitation of Memory Efficiency for GPU-Based FHE Acceleration'
+  authors: [Guang Fan, Yi Chen, Lei Chen, Liang Kong, Chao Niu, Dian Jiao, Yilan Zhu, Geng Yang, Shengyu Fan, Xianglong Deng, Fangyu Zheng, Jian Weng, Meng Li, Yisong Chang, Shoumeng Yan, Mingzhe Zhang]
+  year: 2026
+  venue: isca
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1109/isca66397.2026.00140
+
+- title: 'MNEMOS: A GPU-Based TFHE Acceleration Framework with Memory Access Optimization'
+  authors: [Junyi Zhang, Xianglong Deng, Yi Chen, Guang Fan, Lei Chen, Dian Jiao, Shengyu Fan, Zhiwei Wang, Mingzhe Zhang]
+  year: 2026
+  venue: isca
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1109/isca66397.2026.00141
+
+- title: 'Neo: Towards Efficient Fully Homomorphic Encryption Acceleration using Tensor Core'
+  authors: [Dian Jiao, Xianglong Deng, Zhiwei Wang, Shengyu Fan, Yi Chen, Dan Meng, Rui Hou, Mingzhe Zhang]
+  year: 2025
+  venue: isca
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1145/3695053.3731408
+
+- title: A Compiler-Like Framework for Optimizing Cryptographic Big Integer Multiplication on GPUs
+  authors: [Zhuoran Ji, Jianyu Zhao, Zhaorui Zhang, Jiming Xu, Shoumeng Yan, Lei Ju]
+  year: 2024
+  venue: micro
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1109/micro61859.2024.00036
+
+- title: 'GME: GPU-based Microarchitectural Extensions to Accelerate Homomorphic Encryption'
+  authors: [Kaustubh Shivdikar, Yuhui Bao, Rashmi Agrawal, Michael Shen, Gilbert Jonatan, Evelio Mora, Alexander Ingare, Neal Livesay, José L. Abellán, John Kim, Ajay Joshi, David Kaeli]
+  year: 2023
+  venue: micro
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1145/3613424.3614279
+
+- title: 'ZKProphet: Understanding Performance of Zero-Knowledge Proofs on GPUs'
+  authors: [Tarunesh Verma, Yichao Yuan, Nishil Talati, Todd M. Austin]
+  year: 2025
+  venue: iiswc
+  field: zkp
+  device: gpu
+  url: https://doi.org/10.1109/iiswc66894.2025.00021
+
+- title: Accelerating Number Theoretic Transformations for Bootstrappable Homomorphic Encryption on GPUs
+  authors: [Sangpyo Kim, Wonkyung Jung, Jaiyoung Park, Jung Ho Ahn]
+  year: 2020
+  venue: iiswc
+  field: fhe
+  device: gpu
+  url: https://arxiv.org/abs/2012.01968
+
+- title: 'FIDESlib: A Fully-Fledged Open-Source FHE Library for Efficient CKKS on GPUs'
+  authors: [Carlos Agulló-Domingo, Óscar Vera-López, Seyda Guzelhan, Lohit Daksha, Aymane El Jerari, Kaustubh Shivdikar, Rashmi Agrawal, David Kaeli, Ajay Joshi, José L. Abellán]
+  year: 2025
+  venue: ispass
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1109/ispass64960.2025.00045
+
+- title: 'MegaZK: A Memory Efficient GPU System Accelerating End-to-end Zero-Knowledge Proof'
+  authors: [Muyang Li, Yueteng Yu, Bangyan Wang, Xiong Fan, Mingyu Gao, Shuwen Deng]
+  year: 2026
+  venue: ics
+  field: zkp
+  device: gpu
+  url: https://doi.org/10.1145/3797905.3807842
+
+- title: 'GPIR: Enabling Practical Private Information Retrieval with GPUs'
+  authors: [Hyesung Ji, Hyunah Yu, Jongmin Kim, Wonseok Choi, G. Edward Suh, Jung Ho Ahn]
+  year: 2026
+  venue: ics
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1145/3797905.3807844
+
+- title: Scaling Long-Sequence Homomorphic Encrypted Transformer Inference via Hybrid Parallelism on Multi-GPU Systems
+  authors: [Zhaoting Gong, Ran Ran, Fan Yao, Wujie Wen]
+  year: 2026
+  venue: ics
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1145/3797905.3800539
+
+- title: Towards Faster Fully Homomorphic Encryption Implementation with Integer and Floating-point Computing Power of GPUs
+  authors: [Guang Fan, Fangyu Zheng, Lipeng Wan, Lili Gao, Yuan Zhao, Jiankuo Dong, Yixuan Song, Yuewu Wang, Jingqiang Lin]
+  year: 2023
+  venue: ipdps
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1109/ipdps54959.2023.00085
+
+- title: Accelerating Encrypted Computing on Intel GPUs
+  authors: [Yujia Zhai, Mohannad Mahjoub Ali Ibrahim, Yiqin Qiu, Fabian Boemer, Zizhong Chen, Alexey Titov, Alexander Lyashevsky]
+  year: 2022
+  venue: ipdps
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1109/ipdps53621.2022.00074
+
+- title: 'Pipelonk: Accelerating End-to-End Zero-Knowledge Proof Generation on GPUs for PLONK-Based Protocols'
+  authors: [Zhiyuan Zhang, Yanxin Cai, Wenhao Yin, Xueyu Wu, Yi Wang, Lei Ju, Zhuoran Ji]
+  year: 2026
+  venue: ppopp
+  field: zkp
+  device: gpu
+  url: https://doi.org/10.1145/3774934.3786448
+
+- title: 'CUDASTF: Bridging the Gap Between CUDA and Task Parallelism'
+  authors: [Cédric Augonnet, Andrei Alexandrescu, Albert Sidelnik, Michael Garland]
+  year: 2024
+  venue: sc
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1109/sc41406.2024.00049
+
+- title: 'FluxZK: Scalable and Efficient Zero-Knowledge Proof Computation via GPU Acceleration'
+  authors: [Xinwei Qiang, Liukun Yu, Xiyu Wang, Zhengyi Li, Shixuan Sun, Jingwen Leng, Chen Chen, Jiaping Gui, Zhenzhe Zheng, Jin Dong, Minyi Guo]
+  year: 2026
+  venue: hpdc
+  field: zkp
+  device: gpu
+  url: https://doi.org/10.1145/3806645.3820068
+
+- title: 'ML-Cube: Accelerating Module-Lattice-Based Cryptography using Machine Learning Accelerators with a Memory-Less Design'
+  authors: [Tian Zhou, Fangyu Zheng, Zhuoyu Xie]
+  year: 2025
+  venue: ccs
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1145/3719027.3765130
+
+- title: 'zkLLM: Zero Knowledge Proofs for Large Language Models'
+  authors: [Haochen Sun, Jason Li, Hongyang Zhang]
+  year: 2024
+  venue: ccs
+  field: zkp
+  device: gpu
+  url: https://doi.org/10.1145/3658644.3670334
+
+- title: 'THOR: Secure Transformer Inference with Homomorphic Encryption'
+  authors: [Jungho Moon, Dongwoo Yoo, Xiaoqian Jiang, Miran Kim]
+  year: 2025
+  venue: ccs
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1145/3719027.3765150
+
+- title: 'WPC: Weight Plaintext Compression for CNN Inference based on RNS-CKKS'
+  authors: [Guiming Shi, Yuchen Wei, Shengyu Fan, Xianglong Deng, Liang Kong, Xianbin Li, Jingwei Cai, Shuwen Deng, Mingzhe Zhang, Kaisheng Ma]
+  year: 2025
+  venue: ccs
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1145/3719027.3765022
+
+- title: 'DPad-HE: Towards Hardware-friendly Homomorphic Evaluation using 4-Directional Manipulation'
+  authors: [Wenxu Tang, Fangyu Zheng, Fan Guang, Tian Zhou, Jingqiang Lin, Jiwu Jing]
+  year: 2024
+  venue: ccs
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1145/3658644.3690280
+
+- title: 'TensorZKP: Repurposing GPU Tensor Cores for High-Performance Zero-Knowledge Proofs'
+  authors: [Tao Lu, Jipeng Zhang, Yanpei Guo, Xuanming Liu, Wenjie Qu, Zonghui Wang, Wenzhi Chen, Jiaheng Zhang]
+  year: 2026
+  venue: usenix-sec
+  field: zkp
+  device: gpu
+  url: null
+
+- title: 'Libra: Pattern-Scheduling Co-Optimization for Cross-Scheme FHE Code Generation over GPGPU'
+  authors: [Song Bian, Yintai Sun, Zian Zhao, Haowen Pan, Mingzhe Zhang, Zhenyu Guan]
+  year: 2026
+  venue: usenix-sec
+  field: fhe
+  device: gpu
+  url: https://www.usenix.org/conference/usenixsecurity26/presentation/bian-song
+
+- title: 'Breaking the Layer Barrier: Remodeling Private Transformer Inference with Hybrid CKKS and MPC'
+  authors: [Tianshi Xu, Wen-jie Lu, Jiangrui Yu, Yi Chen, Chenqi Lin, Runsheng Wang, Meng Li]
+  year: 2025
+  venue: usenix-sec
+  field: fhe
+  device: gpu
+  url: https://www.usenix.org/conference/usenixsecurity25/presentation/xu-tianshi
+  gpu_partial: true
+
+- title: A Novel High-performance Implementation of CRYSTALS-Kyber with AI Accelerator
+  authors: [Lipeng Wan, Fangyu Zheng, Guang Fan, Rong Wei, Lili Gao, Yuewu Wang, Jingqiang Lin, Jiankuo Dong]
+  year: 2022
+  venue: esorics
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1007/978-3-031-17143-7_25
+
+- title: 'AMG: Memory Efficient Architecture for FHE-Based Secure Matrix Multiplication on GPU'
+  authors: [Y. Richard Yang, Jiayu Dong, Mengxi Fan, Peng Xu, Wei Wang, Qidong Chen, Guomin Yang]
+  year: 2026
+  venue: esorics
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1007/978-3-032-38708-0_11
+
+- title: 'Athena: Accelerating KeySwitch and Bootstrapping for Fully Homomorphic Encryption on CUDA GPU'
+  authors: [Y. Richard Yang, Kexin Zhang, Peng Xu, Zhaojun Lu, Wei Wang, Weiqi Wang, Kaitai Liang]
+  year: 2025
+  venue: esorics
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1007/978-3-032-07891-9_23
+
+- title: 'Eva: Efficient Privacy-Preserving Proof of Authenticity for Lossily Encoded Videos'
+  authors: [Chengru Zhang, Xiao Yang, David Oswald, Mark Dermot Ryan, Philipp Jovanovic]
+  year: 2025
+  venue: sp
+  field: zkp
+  device: gpu
+  url: https://doi.org/10.1109/sp61157.2025.00237
+  gpu_partial: true
+
+- title: 'Opera: Achieving Secure and High-Performance OLAP with Parallelized Homomorphic Comparisons'
+  authors: [Qi Hu, Wei Chen, Tianxiang Shen, Xin Yao, Nicholas Y. Zhang, Heming Cui, Siu‐Ming Yiu]
+  year: 2025
+  venue: sp
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1109/sp61157.2025.00173
+
+- title: 'VeriLoRA: Fine-Tuning Large Language Models with Verifiable Security via Zero-Knowledge Proofs'
+  authors: [Guofu Liao, Taotao Wang, ShengLi Zhang, Jiqun Zhang, Long Shi, Dacheng Tao]
+  year: 2026
+  venue: ndss
+  field: zkp
+  device: gpu
+  url: https://doi.org/10.14722/ndss.2026.242361
+
+- title: 'REDsec: Running Encrypted Discretized Neural Networks in Seconds'
+  authors: [Lars Wolfgang Folkerts, Charles Gouert, Nektarios Georgios Tsoutsos]
+  year: 2023
+  venue: ndss
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.14722/ndss.2023.24034
+
+- title: 'MARS: A General GPU Optimization Framework for Merkle-Tree–Enabled Cryptography'
+  authors: [Yaoyun Zhou, Qian Wang]
+  year: 2026
+  venue: date
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.23919/date69613.2026.11539292
+
+- title: GPU Acceleration of the Sum-Check Protocol Over Towers of Binary Fields for Verifiable Computing
+  authors: [Andrew Fan, Yanze Wu, Harry Han, Md Tanvir Arafin]
+  year: 2026
+  venue: date
+  field: zkp
+  device: gpu
+  url: https://doi.org/10.23919/date69613.2026.11539722
+
+- title: 'Coala: Coalescion-Based Acceleration of Polynomial Multiplication for GPU Execution'
+  authors: [Homer Gamil, Oleg Mazonka, Michail Maniatakos]
+  year: 2025
+  venue: date
+  field: ntt
+  device: gpu
+  url: https://doi.org/10.23919/date64628.2025.10992695
+
+- title: 'MACH: Memory-Aware Configuration Generation for Homomorphically Encrypted Neural Networks'
+  authors: [Honghui You, Linjie Xiao, Yuhang Fan, Wenzhe Wang, Tianxiang Sui, Zhuoran Ji, Lei Ju]
+  year: 2026
+  venue: dac
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1145/3770743.3804059
+
+- title: Multi-GPU Tensor-Level Fusion and Adaptive Memory Management for Private Inference
+  authors: [Homer Gamil, Michail Maniatakos]
+  year: 2026
+  venue: dac
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1145/3770743.3803995
+
+- title: 'Invited Paper: Pushing SIMD Efficiency in Homomorphic Encryption for Machine Learning via Pattern-Aware Ciphertext Encoding'
+  authors: [Ran Ran, Zhaoting Gong, Zhaowei Li, Wujie Wen]
+  year: 2025
+  venue: iccad
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1109/iccad66269.2025.11240709
+
+- title: 'cuFHEDB: GPU-Accelerated Fully Homomorphic Encryption Database'
+  authors: [Shijie Gao, Feng Zhang, Qian Xu, Yang Li, XueFeng Liu, Chao Jiang, Limin Xiao, Siqi Ma, Elisa Bertino, Xiaoyong Du]
+  year: 2026
+  venue: icde
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1109/icde65706.2026.00042
+
+- title: An Optimized GPU-based Acceleration of CRYSTALS-Dilithium
+  authors: [Zhao Chen, Weimin He, Jiafei Wu, Jingjie Liu, Boqin Xu, Xiaoning Bian, Zhe Liu]
+  year: 2025
+  venue: icassp
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1109/icassp49660.2025.10890327
+
+- title: Optimizing HQC with Enhanced Parallel Binary Polynomial Multiplication on GPUs
+  authors: [DongCheon Kim, JunHyeok Choi, Wai Kong Lee, Seog Chung Seo]
+  year: 2027
+  venue: tches
+  field: pqc
+  device: gpu
+  url: null
+  note: 게재 예정
+
+- title: 'Adapting AES-Oriented Optimizations to Rijndael-256: Cortex-M4, ARMv8-A, and CUDA'
+  authors: [Siwoo Eum, Minho Song, Minjoo Sim, Anupam Chattopadhyay, Hwajeong Seo]
+  year: 2026
+  venue: tches
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.46586/tches.v2026.i4.575-596
+
+- title: High-Throughput GPU Design and Implementation of MAYO with Matrix Computation Reordering
+  authors: [Haoyang Chen, Junhao Huang, Shutong Jin, Ray C. C. Cheung, Donglong Chen, Wangchen Dai]
+  year: 2026
+  venue: tches
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.46586/tches.v2026.i4.496-521
+
+- title: 'ConvKyber: Unleashing the Power of AI Accelerators for Faster Kyber with Novel Iteration-based Approaches'
+  authors: [Tian Zhou, Fangyu Zheng, Guang Fan, Lipeng Wan, Wenxu Tang, Yixuan Song, Yi Bian, Jingqiang Lin]
+  year: 2024
+  venue: tches
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.46586/tches.v2024.i2.25-63
+
+- title: 'Elastic MSM: A Fast, Elastic and Modular Preprocessing Technique for Multi-Scalar Multiplication Algorithm on GPUs'
+  authors: [Xudong Zhu, Haoqi He, Zhengbang Yang, Yi Deng, Lutan Zhao, Rui Hou]
+  year: 2024
+  venue: tches
+  field: zkp
+  device: gpu
+  url: https://doi.org/10.46586/tches.v2024.i4.258-284
+
+- title: Load-Balanced Parallel Implementation on GPUs for Multi-Scalar Multiplication Algorithm
+  authors: [Yutian Chen, Cong Peng, Yu Dai, Min Luo, Debiao He]
+  year: 2024
+  venue: tches
+  field: zkp
+  device: gpu
+  url: https://doi.org/10.46586/tches.v2024.i2.522-544
+
+- title: 'cuZK: Accelerating Zero-Knowledge Proof with A Faster Parallel Multi-Scalar Multiplication Algorithm on GPUs'
+  authors: [Tao Lu, Chengkun Wei, Ruijing Yu, Chaochao Chen, Wenjing Fang, Lei Wang, Zeke Wang, Wenzhi Chen]
+  year: 2023
+  venue: tches
+  field: zkp
+  device: gpu
+  url: https://doi.org/10.46586/tches.v2023.i3.194-220
+
+- title: 'BOLT-FHE: An Efficient Unified Framework for GPU-based TFHE Bootstrapping via On-Chip Local Tiling Strategies'
+  authors: [Yanren Chen, Fangyu Zheng, Guang Fan, Jiankuo Dong, Wenxu Tang, Tian Zhou, Jingqiang Lin, Jiwu Jing]
+  year: 2026
+  venue: tches
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.46586/tches.v2026.i3.198-223
+
+- title: GPU Acceleration for FHEW/TFHE Bootstrapping
+  authors: [Yu Xiao, Feng-Hao Liu, Yu-Te Ku, Ming-Chien Ho, Chih-Fan Hsu, Ming-Ching Chang, Shih-Hao Hung, Wei-Chao Chen]
+  year: 2025
+  venue: tches
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.46586/tches.v2025.i1.314-339
+
+- title: 'VeloFHE: GPU Acceleration for FHEW and TFHE Bootstrapping'
+  authors: [Shiyu Shen, Hao Yang, Zhe Liu, Ying Liu, Xianhui Lu, Wangchen Dai, Lu Zhou, Yunlei Zhao, Ray C. C. Cheung]
+  year: 2025
+  venue: tches
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.46586/tches.v2025.i3.81-114
+
+- title: 'High-Performance FV Somewhat Homomorphic Encryption on GPUs: An Implementation using CUDA'
+  authors: [Ahmad Al Badawi, Bharadwaj Veeravalli, Chan Fook Mun, Khin Mi Mi Aung]
+  year: 2018
+  venue: tches
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.46586/tches.v2018.i2.70-95
+
+- title: 'cuFalcon: An Adaptive Parallel GPU Implementation for High-Performance Falcon Acceleration'
+  authors: [Wenqian Li, Hanyu Wei, Shiyu Shen, Hao Yang, Wangchen Dai, Yunlei Zhao]
+  year: 2026
+  venue: tpds
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1109/tpds.2026.3675891
+  note: 위키 보유본은 ePrint 판
+
+- title: 'HI-Kyber: A Novel High-Performance Implementation Scheme of Kyber Based on GPU'
+  authors: [Xinyi Ji, Jiankuo Dong, Tonggui Deng, Pinchang Zhang, Jiafeng Hua, Fu Xiao]
+  year: 2024
+  venue: tpds
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1109/tpds.2024.3379734
+
+- title: 'High Throughput Lattice-based Signatures on GPUs: Comparing Falcon and Mitaka'
+  authors: [Wai-Kong Lee, Raymond K. Zhao, Ron Steinfeld, Amin Sakzad, Seong Oun Hwang]
+  year: 2024
+  venue: tpds
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1109/tpds.2024.3367319
+
+- title: High-Throughput GPU Implementation of Dilithium Post-Quantum Digital Signature
+  authors: [Shiyu Shen, Hao Yang, Wangchen Dai, Hong Zhang, Zhe Liu, Yunlei Zhao]
+  year: 2024
+  venue: tpds
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1109/tpds.2024.3453289
+
+- title: Efficient GPU Implementations of Post-Quantum Signature XMSS
+  authors: [Ziheng Wang, Xiaoshe Dong, Heng Chen, Yan Kang]
+  year: 2023
+  venue: tpds
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1109/tpds.2022.3233348
+
+- title: 'cuNH: Efficient GPU Implementations of Post-Quantum KEM NewHope'
+  authors: [Yiwen Gao, Jia Xu, Hongbing Wang]
+  year: 2022
+  venue: tpds
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1109/tpds.2021.3097277
+
+- title: 'Chameleon: An Efficient FHE Scheme Switching Acceleration on GPUs'
+  authors: [Zhiwei Wang, Haoqi He, Lutan Zhao, Peinan Li, Zhihao Li, Dan Meng, Rui Hou]
+  year: 2025
+  venue: tpds
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1109/tpds.2025.3604866
+
+- title: 'GIF-FHE: A Comprehensive Implementation and Evaluation of GPU-Accelerated FHE With Integer and Floating-Point Computing Power'
+  authors: [Fangyu Zheng, Guang Fan, Wenxu Tang, Yixuan Song, Tian Zhou, Yuan Zhao, Jiankuo Dong, Jingqiang Lin, Shoumeng Yan, Jiwu Jing]
+  year: 2025
+  venue: tpds
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1109/tpds.2025.3574481
+
+- title: 'HE-Booster: An Efficient Polynomial Arithmetic Acceleration on GPUs for Fully Homomorphic Encryption'
+  authors: [Zhiwei Wang, Peinan Li, Rui Hou, Zhihao Li, Jiangfeng Cao, XiaoFeng Wang, Dan Meng]
+  year: 2023
+  venue: tpds
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1109/tpds.2022.3228628
+
+- title: 'GRASP: Accelerating Hash-Based PQC Performance on GPU Parallel Architecture'
+  authors: [Yijing Ning, Jiankuo Dong, Jingqiang Lin, Fangyu Zheng, Yu Fu, Fu Xiao]
+  year: 2026
+  venue: tc
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1109/tc.2026.3654650
+
+- title: 'HIGH: Harnessing GPU Parallelism for Optimized HQC Performance'
+  authors: [Jiankuo Dong, Yuze Hou, Shiqin Wang, Letian Sha, Fu Xiao, Zhenjiang Dong, Jingqiang Lin]
+  year: 2026
+  venue: tc
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1109/tc.2026.3700228
+
+- title: 'AsyncGBP+: Bridging SSL/TLS and Heterogeneous Computing Power With GPU-Based Providers'
+  authors: [Yi Bian, Fangyu Zheng, Yuewu Wang, Lingguang Lei, Yuan Ma, Tian Zhou, Jiankuo Dong, Fan Guang, Jiwu Jing]
+  year: 2025
+  venue: tc
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1109/tc.2024.3477987
+
+- title: 'CUSPX: Efficient GPU Implementations of Post-Quantum Signature SPHINCS +'
+  authors: [Ziheng Wang, Xiaoshe Dong, Heng Chen, Yan Kang, Qiang Wang]
+  year: 2025
+  venue: tc
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1109/tc.2024.3457736
+
+- title: 'HPS: Speeding Up Paillier Homomorphic Cryptosystem on GPU'
+  authors: [Jiankuo Dong, Qingbo Ye, Lu Sheng, Liming Feng, Zhenjiang Dong, Jingqiang Lin, Fu Xiao]
+  year: 2026
+  venue: tc
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1109/tc.2026.3741899
+  note: Paillier(부분 동형) — 엄밀히는 FHE 아님
+
+- title: 'TensorFHE+: Fully Homomorphic Encryption Acceleration Based on Linear Algebra'
+  authors: [Yintai Sun, Shengyu Fan, Zhenhua Yin, Xinkai Song, Xing Hu, Zidong Du, Qi Guo, Weizhi Xu, Rui Hou, Dan Meng, Song Bian, Mingzhe Zhang]
+  year: 2026
+  venue: tc
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1109/tc.2025.3629614
+
+- title: 'Leveraging GPU in Homomorphic Encryption: Framework Design and Analysis of BFV Variants'
+  authors: [Shiyu Shen, Hao Yang, Wangchen Dai, Lu Zhou, Zhe Liu, Yunlei Zhao]
+  year: 2024
+  venue: tc
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1109/tc.2024.3457733
+
+- title: 'CARM: CUDA-Accelerated RNS Multiplication in Word-Wise Homomorphic Encryption Schemes for Internet of Things'
+  authors: [Shiyu Shen, Hao Yang, Yu Liu, Zhe Liu, Yunlei Zhao]
+  year: 2023
+  venue: tc
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1109/tc.2022.3227874
+
+- title: 'F-STORM: Spinning NTT-unfriendly Lattices on Tensor Cores via Negacyclic Tensorization'
+  authors: [Yi Bian, Fangyu Zheng, Jiankuo Dong, Yuewu Wang, Jingqiang Lin, Jiwu Jing]
+  year: 2026
+  venue: tifs
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1109/tifs.2026.3750740
+
+- title: 'X 2 O: Cross Parallel Optimization of the CROSS Post-Quantum Scheme on GPU'
+  authors: [Yijing Ning, Jiankuo Dong, Yajie Zhao, Jingqiang Lin, Tian Zhou, Jiachen Wang, Fu Xiao]
+  year: 2026
+  venue: tifs
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1109/tifs.2026.3671118
+
+- title: 'GOLF: Unleashing GPU-Driven Acceleration for FALCON Post-Quantum Cryptography'
+  authors: [Ruihao Dai, Jiankuo Dong, Mingrui Qiu, Zhenjiang Dong, Fu Xiao, Jingqiang Lin]
+  year: 2025
+  venue: tifs
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1109/tifs.2025.3599681
+
+- title: 'Symphony of Speeds: Harmonizing Classic McEliece Cryptography With GPU Innovation'
+  authors: [Wen Wu, Jiankuo Dong, Zhen Xu, Zhenjiang Dong, Dung Duong, Fu Xiao, Jingqiang Lin]
+  year: 2025
+  venue: tifs
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1109/tifs.2025.3595678
+
+- title: 'ECO-BIKE: Bridging the Gap Between PQC BIKE and GPU Acceleration'
+  authors: [Jiankuo Dong, Yusheng Fu, Xusheng Qin, Zhenjiang Dong, Fu Xiao, Jingqiang Lin]
+  year: 2024
+  venue: tifs
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1109/tifs.2024.3443617
+
+- title: 'zkDL: Efficient Zero-Knowledge Proofs of Deep Learning Training'
+  authors: [Haochen Sun, Tonghe Bai, Jason Li, Hongyang Zhang]
+  year: 2024
+  venue: tifs
+  field: zkp
+  device: gpu
+  url: https://doi.org/10.1109/tifs.2024.3520863
+
+- title: 'cuXCMP: CUDA-Accelerated Private Comparison Based on Homomorphic Encryption'
+  authors: [Hao Yang, Shiyu Shen, Zhe Liu, Yunlei Zhao]
+  year: 2024
+  venue: tifs
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1109/tifs.2023.3267677
+
+- title: 'cuML-DSA: Optimized Signing Procedure and Server-Oriented GPU Design for ML-DSA'
+  authors: [Shiyu Shen, Hao Yang, Wenqian Li, Yunlei Zhao]
+  year: 2025
+  venue: tdsc
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1109/tdsc.2024.3494835
+
+- title: 'EncFormer: Secure and Efficient Transformer Inference Over Encrypted Data'
+  authors: [Yufan Zhu, Chao Jin, Khin Mi Mi Aung, Xiaokui Xiao]
+  year: 2026
+  venue: tdsc
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1109/tdsc.2026.3714715
+  gpu_partial: true
+
+- title: 'SETTLER: A Hardware-Assisted Secure and Efficient Transformer Inference Service'
+  authors: [Jingbo Duan, Jing Yao, Yifeng Zheng, Lei Xu, Haibin Zhang]
+  year: 2026
+  venue: tdsc
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1109/tdsc.2026.3731217
+  gpu_partial: true
+
+- title: Soft Error Rate Evaluation and Silent Data Corruption Detection for Reliable TFHE Computations on GPUs
+  authors: [Masakazu Yoshida, Kotaro Matsuoka, Masanori Hashimoto]
+  year: 2026
+  venue: tdsc
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1109/tdsc.2026.3714766
+
+- title: 'Phantom: A CUDA-Accelerated Word-Wise Homomorphic Encryption Library'
+  authors: [Hao Yang, Shiyu Shen, Wangchen Dai, Lu Zhou, Zhe Liu, Yunlei Zhao]
+  year: 2024
+  venue: tdsc
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1109/tdsc.2024.3363900
+
+- title: 'CBPSPX: A CUDA-Based Batch Parallel Optimization of Post-Quantum Signature SPHINCS +'
+  authors: [Jiafei Wu, Yifei Yu, Zhao Chen, Hao Yang, Chao Li, Zhe Liu]
+  year: 2025
+  venue: iotj
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1109/jiot.2025.3585558
+
+- title: Efficient TMVP-Based Polynomial Convolution on GPU for Post-Quantum Cryptography Targeting IoT Applications
+  authors: [Muhammad Asfand Hafeez, Wai-Kong Lee, Angshuman Karmakar, Seong Oun Hwang]
+  year: 2024
+  venue: iotj
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1109/jiot.2024.3384507
+
+- title: High Throughput Acceleration of Scabbard Key Exchange and Key Encapsulation Mechanism Using Tensor Core on GPU for IoT Applications
+  authors: [Muhammad Asfand Hafeez, Wai‐Kong Lee, Angshuman Karmakar, Seong Oun Hwang]
+  year: 2023
+  venue: iotj
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1109/jiot.2023.3282255
+
+- title: GPU Accelerated Full Homomorphic Encryption Cryptosystem, Library, and Applications for IoT Systems
+  authors: [Xiaodong Li, Hehe Gao, Jianyi Zhang, Shuya Yang, Xin Jin, Kim-Kwang Raymond Choo]
+  year: 2024
+  venue: iotj
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1109/jiot.2023.3313443
+
+- title: 'An Example of Parallel Merkle Tree Traversal: Post-Quantum Leighton-Micali Signature on the GPU'
+  authors: [Ziheng Wang, Xiaoshe Dong, Yan Kang, Heng Chen, Qiang Wang]
+  year: 2024
+  venue: taco
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1145/3659209
+
+- title: 'LightZK: An Efficient GPU Acceleration Framework for Large-Scale Zero-Knowledge Proofs'
+  authors: [Biran Lu, Qiang-Sheng Hua, Xuanhua Shi, Hai Jin]
+  year: 2026
+  venue: taco
+  field: zkp
+  device: gpu
+  url: https://doi.org/10.1145/3857809
+
+- title: 'HEngine: A High Performance Optimization Framework on a GPU for Homomorphic Encryption'
+  authors: [Jinghao Zhao, Hongwei Yang, Meng Hao, Weizhe Zhang, Hui He, Desheng Wang]
+  year: 2025
+  venue: taco
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1145/3732942
+
+- title: GPU-Accelerated Post-Quantum OTA Key Exchange Using Batch-Optimized ML-KEM
+  authors: [N L Ujwal Kumar, Digvijay Shinde, M. R. Arun]
+  year: 2026
+  venue: access
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1109/access.2026.3728882
+
+- title: 'TensorCrypto: High Throughput Acceleration of Lattice-Based Cryptography Using Tensor Core on GPU'
+  authors: [Wai-Kong Lee, Hwajeong Seo, Zhenfei Zhang, Seong Oun Hwang]
+  year: 2022
+  venue: access
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1109/access.2022.3152217
+
+- title: High-Performance Number Theoretic Transform on GPU Through radix2-CT and 4-Step Algorithms
+  authors: [Ali Şah Özcan, Arsalan Javeed, Erkay Savaş]
+  year: 2025
+  venue: access
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1109/access.2025.3570024
+
+- title: Fine-grained Parallel Implementation of Post-quantum HQC Key Encapsulation Mechanism on GPUs
+  authors: [Wijden Elmetamri, Mingxiang Chen, Wai‐Kong Lee, Ramachandra Achar, Seong Oun Hwang]
+  year: 2026
+  venue: les
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1109/les.2026.3721482
+
+- title: Parallel Optimization of NTT for Kyber Key Encapsulation Mechanism Using GPU-Accelerated Plantard Arithmetic
+  authors: [Muhammad Asfand Hafeez, Wai‐Kong Lee, Arslan Munir, Seong Oun Hwang]
+  year: 2025
+  venue: les
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1109/les.2025.3598726
+
+- title: 'DPCrypto: Acceleration of Post-Quantum Cryptography Using Dot-Product Instructions on GPUs'
+  authors: [Wai-Kong Lee, Hwajeong Seo, Seong Oun Hwang, Ramachandra Achar, Angshuman Karmakar, Jose Maria Bermudo Mera]
+  year: 2022
+  venue: tcas-i
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.1109/tcsi.2022.3176966
+
+- title: A Five-Year Journey to Accelerate Homomorphic Encryption With GPUs, Demonstrated by Sub-25-ms Convolutional Neural Network Inference
+  authors: [Wonseok Choi, Sangpyo Kim, Jaiyoung Park, Jung Ho Ahn]
+  year: 2026
+  venue: ieee-micro
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1109/mm.2026.3665245
+
+- title: 'cuTraNTT: GPU-based transposed number theoretic transform with low latency homomorphic encryption for IoT applications'
+  authors: [Supriya Adhikary, Wai-Kong Lee, Angshuman Karmakar, Yongwoo Lee, Seong Oun Hwang, Ramachandra Achar]
+  year: 2026
+  venue: cluster-comput
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1007/s10586-026-06260-0
+
+- title: Understanding and boosting fully homomorphic encryption applications on GPU
+  authors: [Shengyu Fan, Xianglong Deng, Xulong Tang, Weizhi Xu, Mingzhe Zhang]
+  year: 2026
+  venue: springer-cybersecurity
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1186/s42400-025-00482-2
+
+- title: GPU-oriented implementation and optimization of Karatsuba–NTT polynomial multiplication
+  authors: [Ruwei Huang, Xiaolong Tang, Junjie Wang, Xuezheng Qin]
+  year: 2026
+  venue: jksucis
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.1007/s44443-026-00722-6
+
+- title: GPU Acceleration for KLSS Key Switching in Fully Homomorphic Encryption
+  authors: [Sai Jin, Ray C. C. Cheung]
+  year: 2025
+  venue: mdpi-mathematics
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.3390/math13233809
+
+- title: Enabling zero knowledge proof by accelerating zk-SNARK kernels on GPU
+  authors: [Ning Ni, Yongxin Zhu]
+  year: 2023
+  venue: jpdc
+  field: zkp
+  device: gpu
+  url: https://doi.org/10.1016/j.jpdc.2022.10.009
+
+- title: Optimized CPU–GPU collaborative acceleration of zero-knowledge proof for confidential transactions
+  authors: [Ying Huang, Xiaoying Zheng, Yongxin Zhu]
+  year: 2023
+  venue: jsa
+  field: zkp
+  device: gpu
+  url: https://doi.org/10.1016/j.sysarc.2022.102807
+
+- title: Accelerating large-scale multi-scalar multiplication in Zk-SNARK through exploiting its multilevel parallelism
+  authors: [Ning Wang, Feng Wang, Pengcheng Hua, Xu Zhao, Zhilei Chai]
+  year: 2025
+  venue: integration
+  field: zkp
+  device: gpu
+  url: https://doi.org/10.1016/j.vlsi.2024.102286
+
+- title: GPU Acceleration of Learning With Errors KEMs Using OpenACC for Post-Quantum Cryptography
+  authors: [Tiziana Liberati, Nitin Shukla, Matteo Barbieri, Gabriella Bettonte, Elisabetta Boella, Simone Rizzo, Daniele Gregori, Marco Pedicini]
+  year: 2026
+  venue: preprint
+  field: pqc
+  device: gpu
+  url: https://doi.org/10.48550/arxiv.2606.01211
+
+- title: On GPU acceleration of PQC algorithms
+  authors: [Daniel Römer, Gero Knoblauch, Alexander Wiesmaier]
+  year: 2025
+  venue: preprint
+  field: pqc
+  device: gpu
+  url: https://eprint.iacr.org/2025/1596
+
+- title: Performance Bottlenecks in Computing ZK Proofs on a GPU
+  authors: [Victor Carolino, Maximilian Nussbaum, Caleb Geren, William Scott, Michael Kaufman, Henry F. Korth]
+  year: 2026
+  venue: preprint
+  field: zkp
+  device: gpu
+  url: https://arxiv.org/abs/2611.09569
+
+- title: GPU Acceleration of TFHE-Based High-Precision Nonlinear Layers for Encrypted LLM Inference
+  authors: [Guoci Chen, Xiurui Pan, Qiao Li, Bo Mao, Congming Gao, Chengying Huan, Mingzhe Zhang, Jie M. Zhang]
+  year: 2026
+  venue: preprint
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.48550/arxiv.2604.04783
+
+- title: 'LibFHE: A Numba-Based CUDA-Python Library for Non-RNS CKKS-BGV Fully Homomorphic Encryption on GPUs'
+  authors: [John Chiang]
+  year: 2026
+  venue: preprint
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.48550/arxiv.2607.05920
+
+- title: 'CAT: A GPU-Accelerated FHE Framework with Its Application to High-Precision Private Dataset Query'
+  authors: [Qirui Li]
+  year: 2025
+  venue: preprint
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.48550/arxiv.2503.22227
+
+- title: Ramp Up NTT in Record Time using GPU-Accelerated Algorithms and LLM-based Code Generation
+  authors: [Yu Cui, Hang Fu, Licheng Wang, Haibin Zhang]
+  year: 2025
+  venue: preprint
+  field: fhe
+  device: gpu
+  url: https://doi.org/10.48550/arxiv.2502.11110

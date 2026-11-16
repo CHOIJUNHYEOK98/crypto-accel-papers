@@ -1,0 +1,150 @@
+<title>GPU 암호 가속 논문 목록</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+/* 레이아웃: 한 줄 읽기 폭의 참고 문헌 목록 — 요약 표 → 거르기 띠 → 학회/저널 → 출판처 카드 → 분야 → 연도순 항목 */
+:root{
+  --bg:#f6f7f8; --surface:#ffffff; --fg:#1b2127; --muted:#5d6872; --line:#dde2e6;
+  --accent:#0f5f6e; --accent-soft:#e3eff1;
+  --pqc:#1f7a5a; --zkp:#b06a00; --fhe:#3d5aa8; --ntt:#7a5c8f;
+  --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171b; --surface:#1a2026; --fg:#e4e8eb; --muted:#9aa5ae; --line:#2c353d;
+  --accent:#6cc3d1; --accent-soft:#1d3238;
+  --pqc:#5cc79c; --zkp:#e5a845; --fhe:#8ea6ec; --ntt:#bb9ad0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171b; --surface:#1a2026; --fg:#e4e8eb; --muted:#9aa5ae; --line:#2c353d;
+  --accent:#6cc3d1; --accent-soft:#1d3238;
+  --pqc:#5cc79c; --zkp:#e5a845; --fhe:#8ea6ec; --ntt:#bb9ad0; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:980px;margin:0 auto;padding-block:40px 64px;display:flex;flex-direction:column;gap:32px}
+h1,h2,h3,h4,h5{text-wrap:balance;margin:0}
+h1{font-size:1.9rem;font-weight:700;letter-spacing:-.01em}
+.sub{color:var(--muted);margin:8px 0 0;max-width:68ch}
+.kpis{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:16px;font-size:.92rem}
+.kpis b{font-family:var(--f-mono);font-weight:500;font-size:1.05rem;font-variant-numeric:tabular-nums}
+.kpis span{display:flex;align-items:center;gap:6px}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:none}
+.d-pqc{background:var(--pqc)}.d-zkp{background:var(--zkp)}.d-fhe{background:var(--fhe)}.d-ntt{background:var(--ntt)}
+.bk{font-family:var(--f-mono);font-size:.74rem;font-weight:500;border-radius:4px;padding:0 7px;border:1px solid var(--accent);color:var(--accent);white-space:nowrap}
+.bk4{background:var(--accent);color:var(--surface)}
+.bk3{background:var(--accent-soft)}
+.ks{font-size:.74rem;font-weight:500;border-radius:4px;padding:0 7px;border:1px solid var(--pqc);color:var(--pqc);white-space:nowrap}
+.ks1{background:var(--pqc);color:var(--surface)}
+.bkkey{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;font-size:.86rem;color:var(--muted);margin-top:10px}
+.tablewrap{overflow-x:auto}
+.mat{border-collapse:collapse;width:100%;min-width:520px;font-size:.9rem;background:var(--surface);border:1px solid var(--line);border-radius:8px}
+.mat th,.mat td{padding:7px 12px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums}
+.mat th:first-child{text-align:left;font-weight:500}
+.mat thead th{font-size:.78rem;letter-spacing:.04em;color:var(--muted);font-weight:600}
+.mat td{font-family:var(--f-mono)}
+.mat .sum{font-weight:500;color:var(--accent)}
+.mat tr.total th,.mat tr.total td{border-bottom:0;font-weight:600}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px;border-bottom:1px solid var(--line);
+  display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.chip{font:inherit;font-size:.86rem;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:4px 12px;cursor:pointer;display:flex;align-items:center;gap:6px}
+.chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--fg)}
+.chip:focus-visible,#q:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+#q{font:inherit;font-size:.88rem;flex:1 1 200px;min-width:0;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:6px;padding:5px 10px}
+.nav{display:flex;gap:14px;font-size:.86rem;margin-left:auto}
+.nav a{color:var(--accent);text-decoration:none}
+.part{display:flex;flex-direction:column;gap:14px}
+.part>h2{font-size:1.45rem;padding-bottom:6px;border-bottom:2px solid var(--fg)}
+.part>h3{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:600;margin-top:10px}
+.cnt{font-family:var(--f-mono);font-weight:400;font-size:.8em;color:var(--muted)}
+.lead{margin:0;color:var(--muted)}
+.venues{display:flex;flex-direction:column;gap:12px}
+.venue{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.vh{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.vh h4{font-size:1.08rem;font-weight:700}
+.vn{color:var(--muted);font-size:.84rem;flex:1 1 auto;min-width:0}
+.vc{font-family:var(--f-mono);font-size:.82rem;color:var(--muted)}
+.dom h5{font-size:.86rem;font-weight:600;display:flex;align-items:center;gap:7px;margin-bottom:4px}
+.dom ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.dom li{display:grid;grid-template-columns:3.2em 1fr;gap:10px;padding:5px 0;border-top:1px dashed var(--line)}
+.dom li:first-child{border-top:0}
+.yr{font-family:var(--f-mono);font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:1px}
+.ti{min-width:0;overflow-wrap:anywhere}
+.ti a{color:var(--fg);text-decoration:none;border-bottom:1px solid var(--line)}
+.ti a:hover{border-bottom-color:var(--accent);color:var(--accent)}
+.au{color:var(--muted);font-size:.84rem;margin-left:8px}
+.tag{display:inline-block;font-size:.72rem;letter-spacing:.02em;border:1px solid var(--line);color:var(--muted);border-radius:4px;padding:0 6px;margin-left:6px;vertical-align:1px}
+.tag-part{border-color:var(--zkp);color:var(--zkp)}
+.notes{font-size:.9rem;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+.notes h2{font-size:1rem;color:var(--fg);margin-bottom:8px}
+.notes ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px;max-width:78ch}
+.empty{color:var(--muted);font-size:.9rem}
+@media (max-width:520px){.au{display:block;margin-left:0}.nav{margin-left:0}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>GPU 암호 가속 논문 목록</h1>
+    <p class="sub">양자내성암호(PQC)·영지식 증명(ZKP)·완전 동형암호(FHE)를 GPU에서 구현·최적화한 논문을 출판처별로 모았습니다. 학회와 저널을 나누고, 출판처마다 분야별로 최신 연도부터 적었습니다. 2022~2026년 논문이 중심이고, 그 이전의 대표 논문도 일부 들어 있습니다.</p>
+    <div class="kpis">
+{{kpis}}
+    </div>
+  <p class="bkkey"><span class="bk bk4">BK 4</span><span class="bk bk3">BK 3</span><span class="bk">BK 2</span><span class="bk">BK 1</span><span class="ks ks1">정보과학회 최우수</span><span class="ks">정보과학회 우수</span>학회 이름 옆 표시는 BK21플러스 IF (2018) 점수와 한국정보과학회 (2024) 우수 학술대회 등급입니다. 학회는 그 표에 있는 곳만 실었습니다. 저널은 그 표의 대상이 아니라 점수가 없습니다.</p>
+  </header>
+
+  <section>
+    {{table}}
+  </section>
+
+  <div class="bar" role="search">
+    <button class="chip" type="button" id="f-all" data-f="all" aria-pressed="true">전체</button>
+    <button class="chip" type="button" id="f-pqc" data-f="pqc" aria-pressed="false"><i class="dot d-pqc"></i>PQC</button>
+    <button class="chip" type="button" id="f-zkp" data-f="zkp" aria-pressed="false"><i class="dot d-zkp"></i>ZKP</button>
+    <button class="chip" type="button" id="f-fhe" data-f="fhe" aria-pressed="false"><i class="dot d-fhe"></i>FHE</button>
+    <input id="q" type="search" placeholder="제목·저자 검색 (예: NTT, MSM, bootstrapping)" aria-label="제목·저자 검색">
+    <nav class="nav"><a href="#conf">학회</a><a href="#jour">저널</a><a href="#preprint">예비 공개본</a></nav>
+  </div>
+  <p class="empty" id="empty" hidden>조건에 맞는 논문이 없습니다.</p>
+
+{{parts}}
+
+  <section class="notes">
+    <h2>목록을 만든 기준</h2>
+    <ul>
+      <li>GPU(CUDA·OpenCL·텐서 코어 등) 구현·최적화가 주요 기여인 논문을 실었습니다. <span class="tag tag-part">GPU 평가 포함</span> 표시는 응용 시스템 논문 가운데 GPU 구현·평가가 일부로 들어간 경우입니다.</li>
+      <li>주요 학회·저널 24곳(ASPLOS·HPCA·ISCA·MICRO·PPoPP·SC·ICS·IPDPS·HPDC·DAC·ICCAD·DATE·CCS·IEEE S&amp;P·USENIX Security·NDSS·CRYPTO·EUROCRYPT·TCHES·IEEE TC·TPDS·TIFS·TDSC·ACM TACO)의 2022~2026년 서지 목록 전체를 분야 낱말로 거른 뒤 제목·초록으로 분류했습니다. 그 밖의 출판처는 개별 수집으로 찾은 논문입니다.</li>
+      <li>FPGA·ASIC 같은 전용 하드웨어 가속기 논문은 GPU 논문이 아니므로 싣지 않았습니다. 블록 암호·타원곡선 등 세 분야 밖의 GPU 논문도 뺐습니다.</li>
+      <li>2026년 하반기 학회(MICRO 2026·SC 2026·ICCAD 2026)는 서지 색인 전이라 빠져 있습니다. MICRO 2025는 색인된 논문 일부만 확인했습니다.</li>
+      <li>같은 논문의 예비 공개본과 게재본이 함께 있으면 게재본만 적었습니다. 제목을 누르면 DOI 또는 원문 주소로 이동합니다.</li>
+      <li>학회 이름 옆의 <span class="bk">BK n</span> 표시는 <a href="https://gist.github.com/Pusnow/6eb933355b5cb8d31ef1abcb3c3e1206">CS 분야 우수 학술대회 목록</a>의 "BK21플러스 IF (2018)" 열 값입니다(4점이 가장 높음). <span class="ks">정보과학회 최우수·우수</span> 표시는 같은 표의 "한국정보과학회 (2024)" 열 값입니다. 학회는 그 표에 실린 곳만 남기고 나머지 학회의 논문은 뺐습니다. 그 표에 있으나 BK 점수 칸이 빈 ICASSP 는 남겨 두었습니다. 그 표는 학회만 다루므로 저널에는 점수가 없습니다.</li>
+    </ul>
+  </section>
+</div>
+
+<script>
+(function(){
+  var chips=[].slice.call(document.querySelectorAll('.chip'));
+  var q=document.getElementById('q');
+  var f='all';
+  function apply(){
+    var term=(q.value||'').trim().toLowerCase(), shown=0;
+    document.querySelectorAll('.dom li').forEach(function(li){
+      var ok=(f==='all'||li.dataset.d===f)&&(!term||li.dataset.q.indexOf(term)>=0);
+      li.hidden=!ok; if(ok) shown++;
+    });
+    document.querySelectorAll('.dom').forEach(function(d){d.hidden=!d.querySelector('li:not([hidden])');});
+    document.querySelectorAll('.venue').forEach(function(v){v.hidden=!v.querySelector('.dom:not([hidden])');});
+    document.querySelectorAll('.venues').forEach(function(v){
+      v.hidden=!v.querySelector('.venue:not([hidden])');
+      var h=v.previousElementSibling; if(h&&h.tagName==='H3') h.hidden=v.hidden;
+    });
+    document.querySelectorAll('.part').forEach(function(p){p.hidden=!p.querySelector('.venue:not([hidden])');});
+    document.getElementById('empty').hidden=shown>0;
+  }
+  chips.forEach(function(c){c.addEventListener('click',function(){
+    f=c.dataset.f; chips.forEach(function(x){x.setAttribute('aria-pressed',x===c?'true':'false');}); apply();
+  });});
+  q.addEventListener('input',apply);
+})();
+</script>

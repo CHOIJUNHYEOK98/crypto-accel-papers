@@ -1,0 +1,244 @@
+# 출판처 목록 — 페이지에 나오는 순서대로 적는다.
+# id: 논문의 venue 칸이 가리키는 이름 / kind: conference·journal·preprint
+# group: 학회·저널 안의 소분류 제목(페이지의 작은 제목) / bk21: BK21플러스 IF (2018) 점수 / kiise: 한국정보과학회 (2024) 등급(최우수·우수)
+# 학회는 CS 분야 우수 학술대회 목록(https://gist.github.com/Pusnow/6eb933355b5cb8d31ef1abcb3c3e1206)에 실린 곳만 싣는다.
+- id: asplos
+  abbr: ASPLOS
+  name: ACM International Conference on Architectural Support for Programming Languages and Operating Systems
+  kind: conference
+  group: 컴퓨터 구조
+  bk21: 4
+  kiise: 최우수
+- id: hpca
+  abbr: HPCA
+  name: IEEE International Symposium on High-Performance Computer Architecture
+  kind: conference
+  group: 컴퓨터 구조
+  bk21: 4
+  kiise: 최우수
+- id: isca
+  abbr: ISCA
+  name: International Symposium on Computer Architecture
+  kind: conference
+  group: 컴퓨터 구조
+  bk21: 4
+  kiise: 최우수
+- id: micro
+  abbr: MICRO
+  name: IEEE/ACM International Symposium on Microarchitecture
+  kind: conference
+  group: 컴퓨터 구조
+  bk21: 4
+  kiise: 최우수
+- id: iiswc
+  abbr: IISWC
+  name: IEEE International Symposium on Workload Characterization
+  kind: conference
+  group: 컴퓨터 구조
+  bk21: 1
+  kiise: 우수
+- id: ispass
+  abbr: ISPASS
+  name: IEEE International Symposium on Performance Analysis of Systems and Software (ISPASS)
+  kind: conference
+  group: 컴퓨터 구조
+  bk21: 1
+  kiise: 우수
+- id: ics
+  abbr: ICS
+  name: ACM International Conference on Supercomputing
+  kind: conference
+  group: 병렬·고성능 계산
+  bk21: 2
+  kiise: 우수
+- id: ipdps
+  abbr: IPDPS
+  name: IEEE International Parallel and Distributed Processing Symposium
+  kind: conference
+  group: 병렬·고성능 계산
+  bk21: 2
+  kiise: 우수
+- id: ppopp
+  abbr: PPoPP
+  name: ACM SIGPLAN Annual Symposium on Principles and Practice of Parallel Programming
+  kind: conference
+  group: 병렬·고성능 계산
+  bk21: 3
+  kiise: 최우수
+- id: sc
+  abbr: SC
+  name: International Conference for High Performance Computing, Networking, Storage and Analysis
+  kind: conference
+  group: 병렬·고성능 계산
+  bk21: 3
+  kiise: 최우수
+- id: hpdc
+  abbr: HPDC
+  name: ACM International Symposium on High-Performance Parallel and Distributed Computing (HPDC)
+  kind: conference
+  group: 병렬·고성능 계산
+  bk21: 2
+  kiise: 우수
+- id: ccs
+  abbr: CCS
+  name: ACM SIGSAC Conference on Computer and Communications Security
+  kind: conference
+  group: 보안·암호
+  bk21: 4
+  kiise: 최우수
+- id: usenix-sec
+  abbr: USENIX Security
+  name: USENIX Security Symposium
+  kind: conference
+  group: 보안·암호
+  bk21: 3
+  kiise: 최우수
+- id: esorics
+  abbr: ESORICS
+  name: European Symposium on Research in Computer Security
+  kind: conference
+  group: 보안·암호
+  bk21: 2
+  kiise: 우수
+- id: sp
+  abbr: IEEE S&P
+  name: IEEE Symposium on Security and Privacy
+  kind: conference
+  group: 보안·암호
+  bk21: 4
+  kiise: 최우수
+- id: ndss
+  abbr: NDSS
+  name: Network and Distributed System Security Symposium
+  kind: conference
+  group: 보안·암호
+  bk21: 2
+  kiise: 최우수
+- id: date
+  abbr: DATE
+  name: Design, Automation and Test in Europe Conference (DATE)
+  kind: conference
+  group: 설계 자동화·회로
+  bk21: 2
+  kiise: 우수
+- id: dac
+  abbr: DAC
+  name: ACM/IEEE Design Automation Conference
+  kind: conference
+  group: 설계 자동화·회로
+  bk21: 3
+  kiise: 최우수
+- id: iccad
+  abbr: ICCAD
+  name: IEEE/ACM International Conference on Computer-Aided Design
+  kind: conference
+  group: 설계 자동화·회로
+  bk21: 3
+  kiise: 우수
+- id: icde
+  abbr: ICDE
+  name: IEEE International Conference on Data Engineering (ICDE)
+  kind: conference
+  group: 기타 학회·워크숍
+  bk21: 3
+  kiise: 최우수
+- id: icassp
+  abbr: ICASSP
+  name: IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)
+  kind: conference
+  group: 기타 학회·워크숍
+  kiise: 우수
+- id: tches
+  abbr: TCHES
+  name: IACR Transactions on Cryptographic Hardware and Embedded Systems
+  kind: journal
+  group: 주요 저널
+- id: tpds
+  abbr: IEEE TPDS
+  name: IEEE Transactions on Parallel and Distributed Systems
+  kind: journal
+  group: 주요 저널
+- id: tc
+  abbr: IEEE TC
+  name: IEEE Transactions on Computers
+  kind: journal
+  group: 주요 저널
+- id: tifs
+  abbr: IEEE TIFS
+  name: IEEE Transactions on Information Forensics and Security
+  kind: journal
+  group: 주요 저널
+- id: tdsc
+  abbr: IEEE TDSC
+  name: IEEE Transactions on Dependable and Secure Computing
+  kind: journal
+  group: 주요 저널
+- id: iotj
+  abbr: IEEE IoT-J
+  name: IEEE Internet of Things Journal
+  kind: journal
+  group: 주요 저널
+- id: taco
+  abbr: ACM TACO
+  name: ACM Transactions on Architecture and Code Optimization
+  kind: journal
+  group: 주요 저널
+- id: access
+  abbr: IEEE Access
+  name: ''
+  kind: journal
+  group: 기타 저널
+- id: les
+  abbr: IEEE ESL
+  name: IEEE Embedded Systems Letters
+  kind: journal
+  group: 기타 저널
+- id: tcas-i
+  abbr: IEEE TCAS-I
+  name: 'IEEE Transactions on Circuits and Systems I: Regular Papers'
+  kind: journal
+  group: 기타 저널
+- id: ieee-micro
+  abbr: IEEE Micro
+  name: IEEE Micro (학술지)
+  kind: journal
+  group: 기타 저널
+- id: cluster-comput
+  abbr: Cluster Computing
+  name: Cluster Computing (Springer 학술지)
+  kind: journal
+  group: 기타 저널
+- id: springer-cybersecurity
+  abbr: Cybersecurity
+  name: Cybersecurity (SpringerOpen 학술지)
+  kind: journal
+  group: 기타 저널
+- id: jksucis
+  abbr: JKSU-CIS
+  name: Journal of King Saud University – Computer and Information Sciences
+  kind: journal
+  group: 기타 저널
+- id: mdpi-mathematics
+  abbr: Mathematics (MDPI)
+  name: ''
+  kind: journal
+  group: 기타 저널
+- id: jpdc
+  abbr: JPDC
+  name: Journal of Parallel and Distributed Computing
+  kind: journal
+  group: 기타 저널
+- id: jsa
+  abbr: JSA
+  name: Journal of Systems Architecture
+  kind: journal
+  group: 기타 저널
+- id: integration
+  abbr: INTEGRATION
+  name: Integration, the VLSI Journal
+  kind: journal
+  group: 기타 저널
+- id: preprint
+  abbr: ePrint · arXiv
+  name: ''
+  kind: preprint
