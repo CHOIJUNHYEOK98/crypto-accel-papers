@@ -2,6 +2,7 @@
 # papers.yml 의 scheme·ops·sys_opt 칸은 여기 key 만 쓴다. field ntt 는 pqc 이름표를 쓴다.
 # load: 그 방식에서 시간을 많이 쓰는 연산. 근거 논문이 있으면 괄호로 적고, 비율을 확인하지 못했으면 그렇게 적는다.
 # PQC·FHE 의 load 는 방식 명세·구현 구조에서 나온 정성 서술이다(측정 비율 아님).
+# zkp schemes 의 pq: 양자 내성 — plausible(그럴듯함: 해시·부호 기반, 증명된 안전성은 아님)·no(타원곡선 기반이라 양자 공격에 깨짐)·depends(체계에 따름)
 fields:
   pqc:
     schemes:
@@ -73,30 +74,48 @@ fields:
     - key: groth16
       label: Groth16
       load: MSM 이 GPU 구현 실행 시간의 70% 이상, 그다음 R1CS 희소 행렬-벡터 곱·NTT (cuZK, TCHES 2023, Figure 1). MSM 을 가속한 뒤에는 NTT 가 증명 지연의 최대 90% (ZKProphet, IISWC 2025)
+      pq: 'no'
+      pq_basis: 쌍선형 사상(페어링) 기반 약정
     - key: plonk
       label: PLONK (KZG 약정)
       load: NTT 와 MSM 두 연산이 계산 비용의 86.4% 이상 (Pipelonk, PPoPP 2026 §1). 메모리가 수백 GB 에 이르러 GPU 용량을 넘는다
+      pq: 'no'
+      pq_basis: KZG 약정(쌍선형 사상)
     - key: plonkish-fri
       label: Plonkish + FRI (Plonky2)
       load: MSM 이 없다. 증인 생성·NTT·저차 확장·Poseidon 머클 트리로 시간이 흩어지고, 메모리는 저차 확장 값이 지배한다 (MegaZK, ICS 2026)
+      pq: plausible
+      pq_basis: 해시 기반 약정(FRI)
     - key: sumcheck-hash
       label: 합 검사 + 해시 약정 (Orion·Brakedown 계열)
       load: MSM·NTT 가 없다. 합 검사·머클 트리(SHA-256)·선형 시간 부호화(희소 행렬-벡터 곱)가 부하다 (BatchZK, ASPLOS 2025). 합 검사는 큰 표를 반복해 읽고 쓰는 메모리 대역폭 병목이다 (zkSpeed, ISCA 2025 Table 1 — 합 검사 라운드의 산술 강도 0.04~0.22 대 MSM 7.83~8.70)
+      pq: plausible
+      pq_basis: 해시(머클 트리)·부호 기반 약정
     - key: binius
       label: 이진체 탑 (Binius)
       load: 약정(리드-솔로몬 부호화·머클 트리)과 합 검사가 증명자 계산을 지배한다. 이진체 곱셈은 GPU 에 전용 명령이 없다 (DATE 2026, Fan 외)
+      pq: plausible
+      pq_basis: 해시 기반 약정
     - key: gkr-hyrax
       label: GKR·합 검사 + Hyrax 약정 (zkML)
       load: 텐서 연산을 합 검사로 증명하고 약정에 타원곡선 MSM 을 쓴다. 단계별 비율은 확인하지 못했다
+      pq: 'no'
+      pq_basis: Hyrax 약정(이산 로그)
     - key: folding
       label: 폴딩 IVC (Nova 계열)
       load: 단계마다 증인 약정(MSM)과 교차항 계산을 한다. 단계별 비율은 확인하지 못했다
+      pq: 'no'
+      pq_basis: 이산 로그 기반 약정(격자 기반 폴딩 LatticeFold 는 예외)
     - key: bulletproofs
       label: Bulletproofs (내적 논증)
       load: 타원곡선 점 연산으로 된 내적 논증이 부하다. 단계별 비율은 확인하지 못했다
+      pq: 'no'
+      pq_basis: 이산 로그
     - key: kernel
       label: 체계 무관 단일 연산
       load: 특정 증명 체계를 정하지 않고 MSM·NTT 같은 연산 하나를 가속한 논문
+      pq: depends
+      pq_basis: 적용하는 체계에 따름
     ops:
     - key: msm
       label: MSM

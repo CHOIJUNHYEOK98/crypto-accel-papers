@@ -33,6 +33,7 @@ VENUE_KEYS = {"id", "abbr", "name", "kind", "group", "bk21", "kiise"}
 PAPER_KEYS = {"title", "authors", "year", "venue", "field", "device", "url", "gpu_partial", "note",
               "scheme", "ops", "sys_opt", "focus"}
 VOCAB_OF = {"pqc": "pqc", "zkp": "zkp", "fhe": "fhe", "ntt": "pqc"}  # 분야 → 이름표(공통 NTT 편은 PQC 이름표)
+PQ_LABEL = {"plausible": "그럴듯함", "no": "없음", "depends": "체계에 따름"}
 GUIDE_TITLE = {"pqc": "PQC 방식과 부하 연산", "zkp": "ZKP 증명 체계 계열과 부하 연산", "fhe": "FHE 방식과 부하 연산"}
 
 
@@ -132,6 +133,11 @@ def paper_li(p, tax):
     extra = ('<span class="zk">' + "".join(f'<span class="sys s-{vf}">{esc(sl[k])}</span>' for k in p["scheme"])
              + "".join(f'<span class="op">{esc(ol[k])}</span>' for k in p["ops"])
              + "".join(f'<span class="so">{esc(so[k])}</span>' for k in sys_opt) + "</span>")
+    if vf == "zkp":
+        pqv = {x["key"]: x["pq"] for x in tax["fields"]["zkp"]["schemes"]}
+        if all(pqv[k] == "plausible" for k in p["scheme"]):
+            extra = extra.replace('<span class="zk">', '<span class="zk"><span class="pq pq-plausible">양자 내성</span>', 1)
+            q += " 양자 내성"
     if p.get("focus"):
         q += " " + p["focus"].lower()
         extra += f'<span class="fo">{esc(p["focus"])}</span>'
@@ -216,10 +222,19 @@ def render(venues, papers, tax):
         fp = [p for p in papers if VOCAB_OF[p["field"]] == f]
         cnt = Counter(k for p in fp for k in p["scheme"])
         schemes = [x for x in tax["fields"][f]["schemes"] if cnt[x["key"]]]
+        pqh = "<th>양자 내성</th>" if f == "zkp" else ""
+        def pqc_cell(x):
+            if f != "zkp":
+                return ""
+            return f'<td><span class="pq pq-{x["pq"]}">{PQ_LABEL[x["pq"]]}</span> {esc(x["pq_basis"])}</td>'
         guide += (f'<h3><span class="dot d-{f}"></span>{GUIDE_TITLE[f]}</h3>'
-                  '<div class="tablewrap"><table class="mat"><thead><tr><th>방식</th><th>부하 연산</th><th>편수</th></tr></thead><tbody>'
-                  + "".join(f'<tr><th>{esc(x["label"])}</th><td>{esc(x["load"])}</td><td class="n">{cnt[x["key"]]}</td></tr>'
+                  f'<div class="tablewrap"><table class="mat"><thead><tr><th>방식</th><th>부하 연산</th>{pqh}<th>편수</th></tr></thead><tbody>'
+                  + "".join(f'<tr><th>{esc(x["label"])}</th><td>{esc(x["load"])}</td>{pqc_cell(x)}<td class="n">{cnt[x["key"]]}</td></tr>'
                             for x in schemes) + "</tbody></table></div>")
+        if f == "zkp":
+            guide += ('<p class="lead">양자 내성 "그럴듯함"은 해시 함수·부호 이론에만 기대 알려진 양자 공격이 없다는 뜻이고, '
+                      '증명된 안전성은 아닙니다(비대화형 변환의 양자 랜덤 오라클 안전성은 따로 따져야 함). '
+                      '"없음"은 이산 로그·쌍선형 사상에 기대 양자 컴퓨터의 Shor 알고리즘으로 깨지는 계열입니다.</p>')
         options += (f'<optgroup label="{f.upper()}">'
                     + "".join(f'<option value="{f}:{x["key"]}">{esc(x["label"])} ({cnt[x["key"]]})</option>' for x in schemes)
                     + "</optgroup>")
