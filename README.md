@@ -29,7 +29,7 @@
    python3 build.py --check
    ```
 
-4. `data/` 와 `site/index.html` 을 함께 커밋하고 끌어오기 요청(Pull Request)을 연다. GitHub Actions 가 `build.py --check` 로 자료 형식과 페이지 최신 여부를 검사한다.
+4. `data/` 와 `site/index.html` 을 함께 커밋하고 끌어오기 요청(Pull Request)을 연다. GitHub Actions 가 `build.py --check` 로 자료 형식과 페이지 최신 여부를 검사하고, `main` 에 합쳐지면 페이지를 다시 게시한다.
 
 ## 싣는 기준
 
@@ -39,4 +39,4 @@
 
 ## 페이지 보기
 
-비공개 저장소라 GitHub Pages 는 유료 요금제에서만 켤 수 있다. 저장소의 `site/index.html` 을 내려받아 브라우저로 연다.
+https://choijunhyeok98.github.io/crypto-accel-papers/ — `main` 에 올라가면 GitHub Actions 가 검사를 통과한 `site/index.html` 을 GitHub Pages 로 다시 게시한다.
