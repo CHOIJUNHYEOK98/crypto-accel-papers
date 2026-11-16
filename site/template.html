@@ -93,7 +93,16 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .pq-no{color:var(--muted);border:1px solid var(--line)}
 .pq-depends{color:var(--muted);border:1px dashed var(--line)}
 .fo{display:block;font-size:.84rem;color:var(--fg);opacity:.85;margin-top:2px}
-.guide{display:flex;flex-direction:column;gap:10px}
+.guide{display:block;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 14px}
+.guide>summary{cursor:pointer;list-style:none;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+.guide>summary::-webkit-details-marker{display:none}
+.guide>summary h2{display:inline;font-size:1rem}
+.guide>summary h2::before{content:"▸";display:inline-block;margin-right:6px;color:var(--accent);transition:transform .15s}
+.guide[open]>summary h2::before{transform:rotate(90deg)}
+.guide>summary .hint{font-size:.82rem;color:var(--muted)}
+.guide>summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.guide>*:not(summary)+*{margin-top:10px}
+.guide[open]>summary{margin-bottom:10px}
 .guide h2{font-size:1.1rem}
 .guide .mat{min-width:640px}
 .guide .mat th,.guide .mat td{text-align:left;vertical-align:top}

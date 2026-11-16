@@ -213,7 +213,8 @@ def render(venues, papers, tax):
              + f'<tr class="total"><th>합계</th>{cells(total)}</tr></tbody></table></div>')
     kpis = f"      <span>전체 <b>{len(papers)}</b>편</span>\n" + "\n".join(
         f'      <span><i class="dot d-{k}"></i>{h} <b>{total[k]}</b></span>' for k, _, h in FIELDS[:3])
-    guide = ('  <section class="guide" id="guide"><h2>방식·연산·최적화 표시</h2>'
+    guide = ('  <details class="guide" id="guide"><summary><h2>방식·연산·최적화 표시 안내</h2>'
+             '<span class="hint">방식별 부하 연산·양자 내성·시스템 관점 최적화 표 — 눌러서 펼치기</span></summary>'
              '<p class="lead">논문마다 구현·평가한 방식(색 테두리), 가속한 연산(회색 바탕), 시스템 관점 최적화(점선 테두리), '
              '핵심 아이디어(아래 줄)를 적었습니다. 여러 방식으로 평가한 논문은 방식을 여럿 적었습니다. '
              '아래 표의 부하 연산은 각 방식에서 시간을 많이 쓰는 연산과 그 근거입니다.</p>')
@@ -244,7 +245,7 @@ def render(venues, papers, tax):
               + "".join(f'<tr><th><span class="so">{esc(x["label"])}</span></th><td>{esc(x["desc"])}</td>'
                         + "".join(f'<td class="n">{socnt[f][x["key"]] or "·"}</td>' for f in ("pqc", "zkp", "fhe")) + "</tr>"
                         for x in tax["sys_opts"] if any(socnt[f][x["key"]] for f in socnt))
-              + "</tbody></table></div></section>")
+              + "</tbody></table></div></details>")
     select = ('    <select id="sys" aria-label="방식으로 거르기"><option value="all">방식 전체</option>' + options + "</select>")
     tpl = TEMPLATE.read_text(encoding="utf-8")
     return (tpl.replace("{{kpis}}", kpis).replace("{{table}}", table).replace("{{guide}}", guide)
