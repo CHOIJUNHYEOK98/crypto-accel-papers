@@ -3,15 +3,15 @@
 # field: pqc(양자내성암호)·zkp(영지식 증명)·fhe(완전 동형암호)·ntt(PQC·FHE 공통 연산)
 # device: gpu·tpu·npu (지금 페이지는 gpu 만 싣는다)
 # gpu_partial: true 면 "GPU 평가 포함"(응용 시스템 논문에서 GPU 구현·평가가 일부) / note: 제목 옆 짧은 메모
-# ZKP 논문(field: zkp)만: zkp_system(증명 체계 계열)·zkp_ops(가속한 연산)·sys_opt(시스템 관점 최적화, 없으면 생략) — 값은 data/zkp.yml 의 key. focus: 핵심 아이디어나 대상 한 줄
+# scheme(구현·평가한 방식·증명 체계, 여럿 가능)·ops(가속한 연산)·sys_opt(시스템 관점 최적화, 없으면 생략) — 값은 data/taxonomy.yml 의 분야별 key(field ntt 는 pqc 이름표). focus: 핵심 아이디어나 대상 한 줄
 
 - title: Accelerating Number Theoretic Transform with Multi-GPU Systems for Efficient Zero Knowledge Proof
   authors: [Zhuoran Ji, Jianyu Zhao, Peimin Gao, Xiangkai Yin, Lei Ju]
   year: 2025
   venue: asplos
   field: zkp
-  zkp_system: [plonk]
-  zkp_ops: [ntt]
+  scheme: [plonk]
+  ops: [ntt]
   sys_opt: [multi-gpu, overlap]
   focus: 다중 GPU NTT — 회전 인자 곱 없는 재귀 분해, GPU 간 전치와 계산 겹치기
   device: gpu
@@ -22,8 +22,8 @@
   year: 2025
   venue: asplos
   field: zkp
-  zkp_system: [sumcheck-hash]
-  zkp_ops: [sumcheck, hash, spmv]
+  scheme: [sumcheck-hash]
+  ops: [sumcheck, hash, spmv]
   sys_opt: [batch, pipeline, overlap, memory]
   focus: 여러 증명을 연이어 만드는 단계별 커널 파이프라인
   device: gpu
@@ -34,8 +34,8 @@
   year: 2024
   venue: asplos
   field: zkp
-  zkp_system: [kernel]
-  zkp_ops: [msm, field]
+  scheme: [kernel]
+  ops: [msm, field]
   sys_opt: [multi-gpu, cpu-gpu, hw-unit]
   focus: 다중 GPU MSM — 창 안 버킷을 GPU 마다 나눔, 텐서 코어 몽고메리 곱
   device: gpu
@@ -46,8 +46,8 @@
   year: 2023
   venue: asplos
   field: zkp
-  zkp_system: [groth16]
-  zkp_ops: [msm, ntt, field]
+  scheme: [groth16]
+  ops: [msm, ntt, field]
   sys_opt: [multi-gpu, overlap]
   focus: 창을 합친 MSM·버킷 부하 균형, 전역 셔플 없는 NTT
   device: gpu
@@ -58,6 +58,10 @@
   year: 2026
   venue: asplos
   field: fhe
+  scheme: [ckks]
+  ops: [keyswitch, app]
+  sys_opt: [compiler, memory, out-of-core, overlap]
+  focus: 'GPU 동형 프로그램용 컴파일러, 메모리 한도 안 회전 키·변수 배치 자동화'
   device: gpu
   url: https://doi.org/10.1145/3779212.3790120
 
@@ -66,6 +70,10 @@
   year: 2026
   venue: asplos
   field: fhe
+  scheme: [ckks]
+  ops: [ntt, basis, keyswitch, bootstrap]
+  sys_opt: [fusion, tuning]
+  focus: '32비트 RNS 소수 체계와 커널 융합으로 만든 빠른 GPU CKKS 라이브러리'
   device: gpu
   url: https://doi.org/10.1145/3760250.3762223
 
@@ -74,6 +82,10 @@
   year: 2026
   venue: asplos
   field: fhe
+  scheme: [tfhe]
+  ops: [bootstrap, ntt]
+  sys_opt: [hw-unit, batch]
+  focus: '블라인드 회전을 여러 부분 사슬로 나누고 텐서 코어로 곱셈 누산'
   device: gpu
   url: https://doi.org/10.1145/3779212.3790186
 
@@ -82,6 +94,10 @@
   year: 2026
   venue: hpca
   field: pqc
+  scheme: [slh-dsa]
+  ops: [hash]
+  sys_opt: [batch, tuning]
+  focus: 'SPHINCS+ 서명의 여러 머클 트리 동시 계산과 트리 융합 설정 자동 탐색'
   device: gpu
   url: https://doi.org/10.1109/HPCA68181.2026.11408484
 
@@ -90,6 +106,10 @@
   year: 2026
   venue: hpca
   field: fhe
+  scheme: [tfhe]
+  ops: [bootstrap, fft]
+  sys_opt: [hw-unit, fusion, batch]
+  focus: 'FFT 를 텐서 코어 행렬곱으로 바꾸고 외적을 융합한 TFHE 부트스트래핑'
   device: gpu
   url: https://doi.org/10.1109/hpca68181.2026.11408517
 
@@ -98,6 +118,10 @@
   year: 2025
   venue: hpca
   field: fhe
+  scheme: [ckks]
+  ops: [ntt, keyswitch]
+  sys_opt: [hw-unit, fusion, tuning]
+  focus: '텐서 코어와 CUDA 코어를 한 NTT 커널에서 동시에 쓰는 CKKS 가속'
   device: gpu
   url: https://doi.org/10.1109/hpca61900.2025.00091
 
@@ -106,6 +130,10 @@
   year: 2023
   venue: hpca
   field: fhe
+  scheme: [ckks]
+  ops: [ntt, keyswitch, bootstrap]
+  sys_opt: [hw-unit, batch]
+  focus: 'INT8 텐서 코어 NTT 와 연산 단위 묶음 처리로 처리량을 높인 GPU CKKS'
   device: gpu
   url: https://doi.org/10.1109/hpca56546.2023.10071017
 
@@ -114,6 +142,10 @@
   year: 2026
   venue: isca
   field: fhe
+  scheme: [ckks]
+  ops: [linear, app]
+  sys_opt: [tuning]
+  focus: '합성곱 블록 분해와 층 간 암호문 압축으로 회전을 줄인 동형 CNN 추론'
   device: gpu
   url: https://doi.org/10.1109/isca66397.2026.00136
   gpu_partial: true
@@ -123,6 +155,10 @@
   year: 2026
   venue: isca
   field: fhe
+  scheme: [ckks]
+  ops: [ntt, keyswitch, bootstrap]
+  sys_opt: [hw-unit, fusion]
+  focus: 'FP64 텐서 코어 NTT 와 키 전환 단계 교차 융합으로 메모리 접근 절감'
   device: gpu
   url: https://doi.org/10.1109/isca66397.2026.00140
 
@@ -131,6 +167,10 @@
   year: 2026
   venue: isca
   field: fhe
+  scheme: [tfhe]
+  ops: [bootstrap, fft]
+  sys_opt: [hw-unit, fusion, batch]
+  focus: '부트스트래핑 키 타일 재사용과 텐서 코어 FFT 로 메모리 접근을 줄인 TFHE'
   device: gpu
   url: https://doi.org/10.1109/isca66397.2026.00141
 
@@ -139,6 +179,10 @@
   year: 2025
   venue: isca
   field: fhe
+  scheme: [ckks]
+  ops: [ntt, basis, keyswitch]
+  sys_opt: [hw-unit, fusion, pipeline]
+  focus: '기저 변환·키 전환 내적까지 FP64 텐서 코어 행렬곱으로 옮긴 CKKS'
   device: gpu
   url: https://doi.org/10.1145/3695053.3731408
 
@@ -147,6 +191,10 @@
   year: 2024
   venue: micro
   field: pqc
+  scheme: [classical-pk]
+  ops: [field]
+  sys_opt: [compiler]
+  focus: '큰 정수 곱을 고정 크기 병렬 곱셈 단위 호출열로 바꾸는 컴파일러식 틀'
   device: gpu
   url: https://doi.org/10.1109/micro61859.2024.00036
 
@@ -155,6 +203,10 @@
   year: 2023
   venue: micro
   field: fhe
+  scheme: [ckks]
+  ops: [ntt, keyswitch, bootstrap]
+  sys_opt: [hw-ext]
+  focus: '온칩 공유망·모듈러 장치 등 GPU 마이크로구조 확장을 시뮬레이터로 평가'
   device: gpu
   url: https://doi.org/10.1145/3613424.3614279
 
@@ -163,8 +215,8 @@
   year: 2025
   venue: iiswc
   field: zkp
-  zkp_system: [groth16]
-  zkp_ops: [msm, ntt]
+  scheme: [groth16]
+  ops: [msm, ntt]
   focus: GPU 증명 성능 분석 — MSM 가속 뒤 NTT 가 지연의 최대 90%
   device: gpu
   url: https://doi.org/10.1109/iiswc66894.2025.00021
@@ -174,6 +226,9 @@
   year: 2020
   venue: iiswc
   field: fhe
+  scheme: [kernel]
+  ops: [ntt]
+  focus: '즉석 트위들 생성으로 메모리 대역폭 병목을 줄인 GPU NTT 분석'
   device: gpu
   url: https://arxiv.org/abs/2012.01968
 
@@ -182,6 +237,10 @@
   year: 2025
   venue: ispass
   field: fhe
+  scheme: [ckks]
+  ops: [ntt, basis, keyswitch, bootstrap]
+  sys_opt: [fusion]
+  focus: '부트스트래핑까지 갖춘 공개 GPU CKKS 라이브러리'
   device: gpu
   url: https://doi.org/10.1109/ispass64960.2025.00045
 
@@ -190,8 +249,8 @@
   year: 2026
   venue: ics
   field: zkp
-  zkp_system: [plonkish-fri]
-  zkp_ops: [witness, ntt, hash]
+  scheme: [plonkish-fri]
+  ops: [witness, ntt, hash]
   sys_opt: [resident, memory]
   focus: 증명 전 단계를 GPU 에 상주, 제자리 저차 확장으로 메모리 절감
   device: gpu
@@ -202,6 +261,10 @@
   year: 2026
   venue: ics
   field: fhe
+  scheme: [bfv-bgv]
+  ops: [ntt, keyswitch, linear, app]
+  sys_opt: [fusion, multi-gpu, pipeline, batch]
+  focus: 'OnionPIR 의 세 단계를 단계 단위 융합·다중 GPU 분산으로 가속한 비밀 정보 검색'
   device: gpu
   url: https://doi.org/10.1145/3797905.3807844
 
@@ -210,6 +273,10 @@
   year: 2026
   venue: ics
   field: fhe
+  scheme: [ckks]
+  ops: [linear, app]
+  sys_opt: [multi-gpu, overlap, memory]
+  focus: '의존성 인지 분할로 긴 입력 동형 트랜스포머 추론을 여러 GPU 에 나눔'
   device: gpu
   url: https://doi.org/10.1145/3797905.3800539
 
@@ -218,6 +285,10 @@
   year: 2023
   venue: ipdps
   field: fhe
+  scheme: [ckks]
+  ops: [ntt, basis]
+  sys_opt: [hw-unit]
+  focus: 'FP64 장치로 정수 모듈러 곱을 하는 CRT·NTT 기초 연산 비교'
   device: gpu
   url: https://doi.org/10.1109/ipdps54959.2023.00085
 
@@ -226,6 +297,10 @@
   year: 2022
   venue: ipdps
   field: fhe
+  scheme: [ckks]
+  ops: [ntt, keyswitch]
+  sys_opt: [fusion, resident]
+  focus: 'SEAL 의 SYCL 기반 인텔 GPU 백엔드와 단계형 고기수 NTT'
   device: gpu
   url: https://doi.org/10.1109/ipdps53621.2022.00074
 
@@ -234,8 +309,8 @@
   year: 2026
   venue: ppopp
   field: zkp
-  zkp_system: [plonk]
-  zkp_ops: [ntt, msm]
+  scheme: [plonk]
+  ops: [ntt, msm]
   sys_opt: [out-of-core, cpu-gpu, overlap, pipeline, fusion, tuning]
   focus: GPU 메모리를 넘는 PLONK 를 분할 실행·라운드 교차 파이프라인으로
   device: gpu
@@ -246,6 +321,10 @@
   year: 2024
   venue: sc
   field: fhe
+  scheme: [ckks]
+  ops: [app]
+  sys_opt: [multi-gpu, overlap, out-of-core, compiler]
+  focus: 'CUDA 태스크 병렬 실행 모델, CKKS 는 여러 GPU 응용 사례 중 하나'
   device: gpu
   url: https://doi.org/10.1109/sc41406.2024.00049
 
@@ -254,8 +333,8 @@
   year: 2026
   venue: hpdc
   field: zkp
-  zkp_system: [kernel]
-  zkp_ops: [msm, ntt]
+  scheme: [kernel]
+  ops: [msm, ntt]
   sys_opt: [out-of-core, overlap, tuning]
   focus: PCIe 전송과 계산을 겹치는 장치 밖 MSM·NTT
   device: gpu
@@ -266,6 +345,10 @@
   year: 2025
   venue: ccs
   field: pqc
+  scheme: [ml-kem, ml-dsa]
+  ops: [ntt, polymul, hash, full]
+  sys_opt: [hw-unit, fusion, batch]
+  focus: '텐서 코어 연쇄 행렬곱으로 ML-KEM·ML-DSA 전체를 레지스터 안에서 처리'
   device: gpu
   url: https://doi.org/10.1145/3719027.3765130
 
@@ -274,8 +357,8 @@
   year: 2024
   venue: ccs
   field: zkp
-  zkp_system: [gkr-hyrax]
-  zkp_ops: [sumcheck, msm]
+  scheme: [gkr-hyrax]
+  ops: [sumcheck, msm]
   focus: LLM 추론 증명 — 텐서 조회 논증(tlookup)·어텐션 증명(zkAttn)
   device: gpu
   url: https://doi.org/10.1145/3658644.3670334
@@ -285,6 +368,9 @@
   year: 2025
   venue: ccs
   field: fhe
+  scheme: [ckks]
+  ops: [linear, app]
+  focus: '대각 묶음 행렬곱과 지연 재조정으로 만든 비대화형 동형 트랜스포머 추론'
   device: gpu
   url: https://doi.org/10.1145/3719027.3765150
 
@@ -293,6 +379,10 @@
   year: 2025
   venue: ccs
   field: fhe
+  scheme: [ckks]
+  ops: [linear, app]
+  sys_opt: [memory]
+  focus: '주기 패턴을 이용해 CNN 가중치 평문 저장량을 압축'
   device: gpu
   url: https://doi.org/10.1145/3719027.3765022
 
@@ -301,6 +391,9 @@
   year: 2024
   venue: ccs
   field: fhe
+  scheme: [ckks]
+  ops: [keyswitch, ntt]
+  focus: '모듈 격자 CKKS 의 순위 올림·내림으로 키 전환 분해 규모 축소'
   device: gpu
   url: https://doi.org/10.1145/3658644.3690280
 
@@ -309,8 +402,8 @@
   year: 2026
   venue: usenix-sec
   field: zkp
-  zkp_system: [sumcheck-hash]
-  zkp_ops: [sumcheck, spmv, field]
+  scheme: [sumcheck-hash]
+  ops: [sumcheck, spmv, field]
   sys_opt: [hw-unit]
   focus: 텐서 코어로 합 검사·부호화 체 연산
   device: gpu
@@ -321,6 +414,10 @@
   year: 2026
   venue: usenix-sec
   field: fhe
+  scheme: [switching]
+  ops: [app]
+  sys_opt: [compiler, tuning]
+  focus: '방식 전환 동형 프로그램을 C 에서 CUDA 로 생성하는 컴파일러'
   device: gpu
   url: https://www.usenix.org/conference/usenixsecurity26/presentation/bian-song
 
@@ -329,6 +426,9 @@
   year: 2025
   venue: usenix-sec
   field: fhe
+  scheme: [ckks]
+  ops: [linear, app]
+  focus: '층을 연산자로 쪼개 선형 연산을 합친 CKKS·다자간 계산 혼합 트랜스포머 추론'
   device: gpu
   url: https://www.usenix.org/conference/usenixsecurity25/presentation/xu-tianshi
   gpu_partial: true
@@ -338,6 +438,10 @@
   year: 2022
   venue: esorics
   field: pqc
+  scheme: [ml-kem]
+  ops: [ntt]
+  sys_opt: [hw-unit]
+  focus: 'Kyber NTT 를 텐서 코어 INT8 행렬곱(직접 합)으로 계산한 첫 구현'
   device: gpu
   url: https://doi.org/10.1007/978-3-031-17143-7_25
 
@@ -346,6 +450,10 @@
   year: 2026
   venue: esorics
   field: fhe
+  scheme: [ckks]
+  ops: [linear]
+  sys_opt: [memory]
+  focus: 'GPU 동형 행렬곱의 메모리 사용을 줄이는 구조'
   device: gpu
   url: https://doi.org/10.1007/978-3-032-38708-0_11
 
@@ -354,6 +462,9 @@
   year: 2025
   venue: esorics
   field: fhe
+  scheme: [ckks]
+  ops: [keyswitch, bootstrap, ntt, basis]
+  focus: 'KLSS 키 전환과 부트스트래핑 자료 흐름 재구성으로 중복 연산 제거'
   device: gpu
   url: https://doi.org/10.1007/978-3-032-07891-9_23
 
@@ -362,8 +473,8 @@
   year: 2025
   venue: sp
   field: zkp
-  zkp_system: [folding]
-  zkp_ops: [msm]
+  scheme: [folding]
+  ops: [msm]
   sys_opt: [cpu-gpu]
   focus: 동영상 진위 증명 — Nova 폴딩 개선(Loua), 약정 MSM 을 GPU 로
   device: gpu
@@ -375,6 +486,10 @@
   year: 2025
   venue: sp
   field: fhe
+  scheme: [tfhe, ckks, switching]
+  ops: [bootstrap, app]
+  sys_opt: [batch, fusion]
+  focus: '동형 비교 결과 캐시로 부트스트래핑을 줄인 암호화 분석 질의'
   device: gpu
   url: https://doi.org/10.1109/sp61157.2025.00173
 
@@ -383,8 +498,8 @@
   year: 2026
   venue: ndss
   field: zkp
-  zkp_system: [gkr-hyrax]
-  zkp_ops: [sumcheck, msm]
+  scheme: [gkr-hyrax]
+  ops: [sumcheck, msm]
   sys_opt: [memory]
   focus: LoRA 미세조정 증명 — 조회 논증으로 비선형 연산 증명
   device: gpu
@@ -395,6 +510,10 @@
   year: 2023
   venue: ndss
   field: fhe
+  scheme: [tfhe]
+  ops: [bootstrap, app]
+  sys_opt: [resident, multi-gpu]
+  focus: '이진·정수 영역 전환과 지연 부트스트래핑으로 이산 신경망 TFHE 추론'
   device: gpu
   url: https://doi.org/10.14722/ndss.2023.24034
 
@@ -403,6 +522,10 @@
   year: 2026
   venue: date
   field: pqc
+  scheme: [slh-dsa]
+  ops: [hash]
+  sys_opt: [tuning]
+  focus: '머클 트리 층마다 줄어드는 스레드 활용을 워프 부하 늘리기와 실측 자동 조정으로 보완'
   device: gpu
   url: https://doi.org/10.23919/date69613.2026.11539292
 
@@ -411,8 +534,8 @@
   year: 2026
   venue: date
   field: zkp
-  zkp_system: [binius]
-  zkp_ops: [sumcheck, field]
+  scheme: [binius]
+  ops: [sumcheck, field]
   sys_opt: [cpu-gpu]
   focus: 이진체 탑 합 검사 — 비트슬라이스 곱, 라운드별 계산 방식 전환
   device: gpu
@@ -423,6 +546,9 @@
   year: 2025
   venue: date
   field: ntt
+  scheme: [kernel]
+  ops: [ntt, field]
+  focus: '병합 접근용 데이터 배치와 커널 안 RNS 로 GPU DGT(NTT 변형) 가속'
   device: gpu
   url: https://doi.org/10.23919/date64628.2025.10992695
 
@@ -431,6 +557,10 @@
   year: 2026
   venue: dac
   field: fhe
+  scheme: [ckks]
+  ops: [app, bootstrap, keyswitch]
+  sys_opt: [tuning, memory]
+  focus: '장치 메모리 한도 안에서 부트스트래핑 위치·부호화 구성을 자동 탐색'
   device: gpu
   url: https://doi.org/10.1145/3770743.3804059
 
@@ -439,6 +569,10 @@
   year: 2026
   venue: dac
   field: fhe
+  scheme: [ckks]
+  ops: [app]
+  sys_opt: [fusion, multi-gpu, out-of-core, memory]
+  focus: '텐서 단위 연산자 융합과 샤드 분할로 여러 GPU 에서 동형 추론'
   device: gpu
   url: https://doi.org/10.1145/3770743.3803995
 
@@ -447,6 +581,9 @@
   year: 2025
   venue: iccad
   field: fhe
+  scheme: [ckks]
+  ops: [linear, app]
+  focus: '패턴 인식 부호화로 슬롯 활용을 높인 동형 GNN·CNN 추론'
   device: gpu
   url: https://doi.org/10.1109/iccad66269.2025.11240709
 
@@ -455,6 +592,10 @@
   year: 2026
   venue: icde
   field: fhe
+  scheme: [tfhe]
+  ops: [fft, bootstrap, app]
+  sys_opt: [batch]
+  focus: '접는 FFT·블록 간 외부곱으로 TFHE 질의를 가속한 암호 DB'
   device: gpu
   url: https://doi.org/10.1109/icde65706.2026.00042
 
@@ -463,6 +604,9 @@
   year: 2025
   venue: icassp
   field: pqc
+  scheme: [ml-dsa]
+  ops: [ntt, field, full]
+  focus: '공유 메모리·루프 펼치기 NTT 와 PTX 몽고메리 곱을 쓴 Dilithium 전체 구현'
   device: gpu
   url: https://doi.org/10.1109/icassp49660.2025.10890327
 
@@ -471,6 +615,10 @@
   year: 2027
   venue: tches
   field: pqc
+  scheme: [hqc]
+  ops: [polymul, hash, sampling, decode]
+  sys_opt: [hw-unit, resident, batch]
+  focus: '가법 FFT 와 1비트 텐서 코어로 이진 다항식 곱을 가속한 HQC'
   device: gpu
   url: null
   note: 게재 예정
@@ -480,6 +628,9 @@
   year: 2026
   venue: tches
   field: pqc
+  scheme: [kernel]
+  ops: [blockcipher]
+  focus: 'AES 최적화를 Rijndael-256 에 옮긴 CUDA T-table 충돌 없는 공유 메모리 배치'
   device: gpu
   url: https://doi.org/10.46586/tches.v2026.i4.575-596
 
@@ -488,6 +639,10 @@
   year: 2026
   venue: tches
   field: pqc
+  scheme: [multivariate]
+  ops: [linalg, hash, full]
+  sys_opt: [fusion, overlap, memory, batch]
+  focus: '공유 피연산자 행렬곱을 재배열해 전역 메모리 읽기를 재사용한 MAYO'
   device: gpu
   url: https://doi.org/10.46586/tches.v2026.i4.496-521
 
@@ -496,6 +651,10 @@
   year: 2024
   venue: tches
   field: pqc
+  scheme: [ml-kem]
+  ops: [ntt, hash]
+  sys_opt: [hw-unit]
+  focus: '트위들 인자 분해로 Kyber NTT 를 텐서 코어 소형 행렬곱 반복으로 계산'
   device: gpu
   url: https://doi.org/10.46586/tches.v2024.i2.25-63
 
@@ -504,8 +663,8 @@
   year: 2024
   venue: tches
   field: zkp
-  zkp_system: [kernel]
-  zkp_ops: [msm]
+  scheme: [kernel]
+  ops: [msm]
   sys_opt: [overlap]
   focus: 사전계산으로 MSM 규모·스칼라 길이를 조절하는 탄력적 전처리
   device: gpu
@@ -516,8 +675,8 @@
   year: 2024
   venue: tches
   field: zkp
-  zkp_system: [kernel]
-  zkp_ops: [msm]
+  scheme: [kernel]
+  ops: [msm]
   sys_opt: [overlap]
   focus: 버킷 수 1/4 축소·지연 축약·부하 균형 버킷 누적
   device: gpu
@@ -528,8 +687,8 @@
   year: 2023
   venue: tches
   field: zkp
-  zkp_system: [groth16]
-  zkp_ops: [msm, ntt, spmv]
+  scheme: [groth16]
+  ops: [msm, ntt, spmv]
   sys_opt: [resident, overlap, multi-gpu]
   focus: MSM 버킷 모으기를 희소 행렬-벡터 곱으로 바꾼 병렬 MSM
   device: gpu
@@ -540,6 +699,10 @@
   year: 2026
   venue: tches
   field: fhe
+  scheme: [tfhe]
+  ops: [bootstrap, ntt]
+  sys_opt: [fusion, tuning]
+  focus: '블라인드 회전 누산기를 온칩에 두는 단일 커널 TFHE 부트스트래핑'
   device: gpu
   url: https://doi.org/10.46586/tches.v2026.i3.198-223
 
@@ -548,6 +711,10 @@
   year: 2025
   venue: tches
   field: fhe
+  scheme: [tfhe]
+  ops: [bootstrap, fft]
+  sys_opt: [multi-gpu, overlap, batch]
+  focus: '부트스트래핑을 여러 블록에 나누고 FFT 로 바꾼 OpenFHE 의 GPU 판'
   device: gpu
   url: https://doi.org/10.46586/tches.v2025.i1.314-339
 
@@ -556,6 +723,10 @@
   year: 2025
   venue: tches
   field: fhe
+  scheme: [tfhe]
+  ops: [bootstrap, ntt, keyswitch]
+  sys_opt: [fusion, cpu-gpu, batch]
+  focus: '혼합 4단계 NTT 와 모듈러스 올림 블라인드 회전으로 부트스트래핑 가속'
   device: gpu
   url: https://doi.org/10.46586/tches.v2025.i3.81-114
 
@@ -564,6 +735,10 @@
   year: 2018
   venue: tches
   field: fhe
+  scheme: [bfv-bgv]
+  ops: [ntt, basis]
+  sys_opt: [resident, overlap, concurrent]
+  focus: 'BEHZ RNS 와 이산 갈루아 변환으로 FV 연산 전체를 GPU 에서 수행'
   device: gpu
   url: https://doi.org/10.46586/tches.v2018.i2.70-95
 
@@ -572,6 +747,10 @@
   year: 2026
   venue: tpds
   field: pqc
+  scheme: [falcon]
+  ops: [fft, hash, full]
+  sys_opt: [batch, overlap, fusion, memory, precompute]
+  focus: '적응형 병렬 ffSampling 과 세 가지 키 판으로 속도·메모리를 조절한 Falcon'
   device: gpu
   url: https://doi.org/10.1109/tpds.2026.3675891
   note: 위키 보유본은 ePrint 판
@@ -581,6 +760,10 @@
   year: 2024
   venue: tpds
   field: pqc
+  scheme: [ml-kem]
+  ops: [ntt, field, full]
+  sys_opt: [fusion, tuning]
+  focus: '층 병합·깊이 우선 NTT 와 단일 커널로 융합한 Kyber 전체'
   device: gpu
   url: https://doi.org/10.1109/tpds.2024.3379734
 
@@ -589,6 +772,10 @@
   year: 2024
   venue: tpds
   field: pqc
+  scheme: [falcon]
+  ops: [fft, sampling, ntt, hash]
+  sys_opt: [batch, fusion]
+  focus: '재귀 ffSampling 을 반복형으로 바꾼 Falcon 과 Mitaka 의 GPU 처리량 비교'
   device: gpu
   url: https://doi.org/10.1109/tpds.2024.3367319
 
@@ -597,6 +784,10 @@
   year: 2024
   venue: tpds
   field: pqc
+  scheme: [ml-dsa]
+  ops: [ntt, hash, sampling, full]
+  sys_opt: [overlap, fusion, batch]
+  focus: '워프 단위 SHAKE·NTT 와 기각 루프 동적 작업 배정으로 고처리량 Dilithium'
   device: gpu
   url: https://doi.org/10.1109/tpds.2024.3453289
 
@@ -605,6 +796,10 @@
   year: 2023
   venue: tpds
   field: pqc
+  scheme: [stateful-hash]
+  ops: [hash]
+  sys_opt: [batch, overlap]
+  focus: '트리 구성 2단계 병렬과 다중·단일 키쌍 병렬 서명의 XMSS'
   device: gpu
   url: https://doi.org/10.1109/tpds.2022.3233348
 
@@ -613,6 +808,10 @@
   year: 2022
   venue: tpds
   field: pqc
+  scheme: [lattice-other]
+  ops: [ntt, full]
+  sys_opt: [batch, overlap, cpu-gpu]
+  focus: '워프 안 세분 병렬과 2차원 분해 NTT 를 쓴 NewHope'
   device: gpu
   url: https://doi.org/10.1109/tpds.2021.3097277
 
@@ -621,6 +820,10 @@
   year: 2025
   venue: tpds
   field: fhe
+  scheme: [ckks, tfhe, switching]
+  ops: [ntt, bootstrap, linear, keyswitch]
+  sys_opt: [batch, tuning]
+  focus: 'CKKS·TFHE 겸용 NTT 와 묶음 CMux 로 방식 전환을 가속'
   device: gpu
   url: https://doi.org/10.1109/tpds.2025.3604866
 
@@ -629,6 +832,10 @@
   year: 2025
   venue: tpds
   field: fhe
+  scheme: [ckks]
+  ops: [ntt, basis, keyswitch]
+  sys_opt: [hw-unit, fusion]
+  focus: '부동소수 FMA 장치로 모듈러 곱을 하는 정수·부동소수 겸용 FHE'
   device: gpu
   url: https://doi.org/10.1109/tpds.2025.3574481
 
@@ -637,6 +844,10 @@
   year: 2023
   venue: tpds
   field: fhe
+  scheme: [bfv-bgv]
+  ops: [ntt, basis, keyswitch]
+  sys_opt: [multi-gpu, fusion, batch]
+  focus: 'NTT 스레드 짝 국소 동기화와 표현별 분할로 다중 GPU 동형 곱'
   device: gpu
   url: https://doi.org/10.1109/tpds.2022.3228628
 
@@ -645,6 +856,10 @@
   year: 2026
   venue: tc
   field: pqc
+  scheme: [slh-dsa]
+  ops: [hash, full]
+  sys_opt: [fusion, batch]
+  focus: '고처리량·저지연 두 스레드 배정과 단일 커널 융합의 SPHINCS+'
   device: gpu
   url: https://doi.org/10.1109/tc.2026.3654650
 
@@ -653,6 +868,10 @@
   year: 2026
   venue: tc
   field: pqc
+  scheme: [hqc]
+  ops: [polymul, full]
+  sys_opt: [fusion]
+  focus: '고차·저차 Karatsuba 곱 조합(HIKD)과 커널 융합으로 HQC 전체 가속'
   device: gpu
   url: https://doi.org/10.1109/tc.2026.3700228
 
@@ -661,6 +880,10 @@
   year: 2025
   venue: tc
   field: pqc
+  scheme: [ml-kem, classical-pk]
+  ops: [ntt, field, full]
+  sys_opt: [batch, cpu-gpu, overlap, hw-unit, precompute]
+  focus: 'OpenSSL 암호 요청을 비동기로 모아 GPU 에 넘기는 TLS 제공자'
   device: gpu
   url: https://doi.org/10.1109/tc.2024.3477987
 
@@ -669,6 +892,10 @@
   year: 2025
   venue: tc
   field: pqc
+  scheme: [slh-dsa]
+  ops: [hash]
+  sys_opt: [fusion, overlap, batch]
+  focus: '트리 사이·노드 사이·노드 안 3수준 병렬과 작업 병렬을 섞은 SPHINCS+'
   device: gpu
   url: https://doi.org/10.1109/tc.2024.3457736
 
@@ -677,6 +904,10 @@
   year: 2026
   venue: tc
   field: fhe
+  scheme: [partial]
+  ops: [bigint]
+  sys_opt: [batch, tuning]
+  focus: '큰 정수 몽고메리 곱·거듭제곱을 다듬은 GPU 파이예 암호'
   device: gpu
   url: https://doi.org/10.1109/tc.2026.3741899
   note: Paillier(부분 동형) — 엄밀히는 FHE 아님
@@ -686,6 +917,10 @@
   year: 2026
   venue: tc
   field: fhe
+  scheme: [ckks]
+  ops: [ntt, basis, keyswitch]
+  sys_opt: [hw-unit, fusion]
+  focus: 'NTT·CKKS 커널을 행렬·벡터 연산으로 바꿔 텐서 코어·MLU 에 올림'
   device: gpu
   url: https://doi.org/10.1109/tc.2025.3629614
 
@@ -694,6 +929,10 @@
   year: 2024
   venue: tc
   field: fhe
+  scheme: [bfv-bgv]
+  ops: [basis, ntt, keyswitch]
+  sys_opt: [fusion]
+  focus: 'BEHZ·HPS 등 BFV 변형을 GPU 에서 비교하고 기저 변환을 융합'
   device: gpu
   url: https://doi.org/10.1109/tc.2024.3457733
 
@@ -702,6 +941,10 @@
   year: 2023
   venue: tc
   field: fhe
+  scheme: [bfv-bgv, ckks]
+  ops: [ntt, basis]
+  sys_opt: [fusion, memory]
+  focus: '임베디드 GPU 까지 겨냥한 상수시간 RNS 동형 곱셈'
   device: gpu
   url: https://doi.org/10.1109/tc.2022.3227874
 
@@ -710,6 +953,10 @@
   year: 2026
   venue: tifs
   field: pqc
+  scheme: [lattice-other]
+  ops: [polymul, full]
+  sys_opt: [hw-unit, batch]
+  focus: '음순환 합성곱을 텐서 코어 행렬곱에 바로 대응시킨 Saber 전체 구현'
   device: gpu
   url: https://doi.org/10.1109/tifs.2026.3750740
 
@@ -718,6 +965,10 @@
   year: 2026
   venue: tifs
   field: pqc
+  scheme: [cross]
+  ops: [hash, full]
+  sys_opt: [fusion, batch]
+  focus: '워프당 서명 하나와 영지식 라운드를 레인에 나눈 CROSS'
   device: gpu
   url: https://doi.org/10.1109/tifs.2026.3671118
 
@@ -726,6 +977,10 @@
   year: 2025
   venue: tifs
   field: pqc
+  scheme: [falcon]
+  ops: [fft, full]
+  sys_opt: [fusion, batch]
+  focus: '재귀 ffsampling 의 반복문 전환과 스레드당 서명 하나의 Falcon'
   device: gpu
   url: https://doi.org/10.1109/tifs.2025.3599681
 
@@ -734,6 +989,10 @@
   year: 2025
   venue: tifs
   field: pqc
+  scheme: [mceliece]
+  ops: [linalg, decode, full]
+  sys_opt: [cpu-gpu, fusion]
+  focus: '가법 FFT 층 융합·계단 순회와 CPU-GPU 분담의 Classic McEliece'
   device: gpu
   url: https://doi.org/10.1109/tifs.2025.3595678
 
@@ -742,6 +1001,10 @@
   year: 2024
   venue: tifs
   field: pqc
+  scheme: [bike]
+  ops: [polymul, decode, full]
+  sys_opt: [batch]
+  focus: '요청당 3스레드 Karatsuba 곱과 복호기 병렬의 BIKE'
   device: gpu
   url: https://doi.org/10.1109/tifs.2024.3443617
 
@@ -750,8 +1013,8 @@
   year: 2024
   venue: tifs
   field: zkp
-  zkp_system: [gkr-hyrax]
-  zkp_ops: [sumcheck]
+  scheme: [gkr-hyrax]
+  ops: [sumcheck]
   focus: 딥러닝 학습 증명 — ReLU 증명(zkReLU), 층·단계 집계 합 검사
   device: gpu
   url: https://doi.org/10.1109/tifs.2024.3520863
@@ -761,6 +1024,10 @@
   year: 2024
   venue: tifs
   field: fhe
+  scheme: [bfv-bgv]
+  ops: [keyswitch, ntt, app]
+  sys_opt: [overlap, fusion]
+  focus: '상수항 추출과 융합 키 전환 커널로 암호문 비교 가속'
   device: gpu
   url: https://doi.org/10.1109/tifs.2023.3267677
 
@@ -769,6 +1036,10 @@
   year: 2025
   venue: tdsc
   field: pqc
+  scheme: [ml-dsa]
+  ops: [polymul, sampling, ntt, full]
+  sys_opt: [batch, precompute]
+  focus: 'NTT 대신 희소 삼항 다항식 곱과 기각 우선 검사로 서명 단축'
   device: gpu
   url: https://doi.org/10.1109/tdsc.2024.3494835
 
@@ -777,6 +1048,9 @@
   year: 2026
   venue: tdsc
   field: fhe
+  scheme: [ckks]
+  ops: [linear, app]
+  focus: 'FHE·MPC 혼합 트랜스포머 추론에서 재포장·변환을 줄인 커널 설계'
   device: gpu
   url: https://doi.org/10.1109/tdsc.2026.3714715
   gpu_partial: true
@@ -786,6 +1060,10 @@
   year: 2026
   venue: tdsc
   field: fhe
+  scheme: [ckks]
+  ops: [linear, app]
+  sys_opt: [cpu-gpu]
+  focus: 'TEE 가 비선형, GPU 가 동형 선형층을 맡는 트랜스포머 추론'
   device: gpu
   url: https://doi.org/10.1109/tdsc.2026.3731217
   gpu_partial: true
@@ -795,6 +1073,9 @@
   year: 2026
   venue: tdsc
   field: fhe
+  scheme: [tfhe]
+  ops: [bootstrap]
+  focus: 'GPU TFHE 게이트의 소프트 오류율 측정과 조용한 데이터 손상 검출'
   device: gpu
   url: https://doi.org/10.1109/tdsc.2026.3714766
 
@@ -803,6 +1084,10 @@
   year: 2024
   venue: tdsc
   field: fhe
+  scheme: [bfv-bgv, ckks]
+  ops: [ntt, keyswitch, basis]
+  sys_opt: [fusion]
+  focus: 'BFV·BGV·CKKS 를 함께 지원하는 GPU 동형암호 라이브러리'
   device: gpu
   url: https://doi.org/10.1109/tdsc.2024.3363900
 
@@ -811,6 +1096,10 @@
   year: 2025
   venue: iotj
   field: pqc
+  scheme: [slh-dsa]
+  ops: [hash]
+  sys_opt: [batch]
+  focus: '스레드 이용 효율 지표로 병렬 단위를 고른 블록 안 묶음 실행 SPHINCS+'
   device: gpu
   url: https://doi.org/10.1109/jiot.2025.3585558
 
@@ -819,6 +1108,10 @@
   year: 2024
   venue: iotj
   field: pqc
+  scheme: [lattice-other]
+  ops: [polymul]
+  sys_opt: [hw-unit]
+  focus: '음순환 곱을 토플리츠 행렬-벡터 곱으로 펴 텐서 코어로 계산(Saber·Sable)'
   device: gpu
   url: https://doi.org/10.1109/jiot.2024.3384507
 
@@ -827,6 +1120,10 @@
   year: 2023
   venue: iotj
   field: pqc
+  scheme: [lattice-other]
+  ops: [polymul]
+  sys_opt: [hw-unit, batch]
+  focus: '여러 공개키 다항식을 한 행렬로 묶어 텐서 코어로 곱한 Scabbard'
   device: gpu
   url: https://doi.org/10.1109/jiot.2023.3282255
 
@@ -835,6 +1132,9 @@
   year: 2024
   venue: iotj
   field: fhe
+  scheme: [other]
+  ops: [app]
+  focus: '혼동 모듈러 사영 FHE 로 MNIST 신경망 추론을 GPU 에서 병렬화'
   device: gpu
   url: https://doi.org/10.1109/jiot.2023.3313443
 
@@ -843,6 +1143,10 @@
   year: 2024
   venue: taco
   field: pqc
+  scheme: [stateful-hash]
+  ops: [hash]
+  sys_opt: [cpu-gpu, batch]
+  focus: '다 쓴 부분 트리를 제자리에서 통째로 병렬 재구성하는 LMS 트리 순회'
   device: gpu
   url: https://doi.org/10.1145/3659209
 
@@ -851,8 +1155,8 @@
   year: 2026
   venue: taco
   field: zkp
-  zkp_system: [groth16]
-  zkp_ops: [msm, ntt, spmv]
+  scheme: [groth16]
+  ops: [msm, ntt, spmv]
   sys_opt: [out-of-core, overlap, memory, tuning]
   focus: VRAM 을 넘는 대규모 MSM 의 타일 분해, 디스크→VRAM 파이프라인
   device: gpu
@@ -863,6 +1167,10 @@
   year: 2025
   venue: taco
   field: fhe
+  scheme: [ckks]
+  ops: [ntt, basis, keyswitch, app]
+  sys_opt: [fusion, concurrent]
+  focus: '워프 NTT·ICRT 와 커널 융합으로 CKKS 신경망 추론 가속'
   device: gpu
   url: https://doi.org/10.1145/3732942
 
@@ -871,6 +1179,10 @@
   year: 2026
   venue: access
   field: pqc
+  scheme: [ml-kem]
+  ops: [ntt]
+  sys_opt: [batch]
+  focus: '차량 무선 갱신 서버의 묶음 ML-KEM 다항식 연산, 남은 병목은 CPU 해시'
   device: gpu
   url: https://doi.org/10.1109/access.2026.3728882
 
@@ -879,6 +1191,10 @@
   year: 2022
   venue: access
   field: pqc
+  scheme: [lattice-other]
+  ops: [polymul, full]
+  sys_opt: [hw-unit, batch]
+  focus: '텐서 코어 다항식 합성곱을 NTRU·LAC·FrodoKEM 에 적용'
   device: gpu
   url: https://doi.org/10.1109/access.2022.3152217
 
@@ -887,6 +1203,10 @@
   year: 2025
   venue: access
   field: fhe
+  scheme: [kernel]
+  ops: [ntt]
+  sys_opt: [tuning]
+  focus: 'radix-2 CT 커널 분할과 전치를 줄인 4단계 NTT 비교'
   device: gpu
   url: https://doi.org/10.1109/access.2025.3570024
 
@@ -895,6 +1215,9 @@
   year: 2026
   venue: les
   field: pqc
+  scheme: [hqc]
+  ops: [polymul, decode]
+  focus: '64비트 무자리올림 곱과 Karatsuba·RS 세분 병렬의 저지연 HQC'
   device: gpu
   url: https://doi.org/10.1109/les.2026.3721482
 
@@ -903,6 +1226,9 @@
   year: 2025
   venue: les
   field: pqc
+  scheme: [ml-kem]
+  ops: [ntt, field]
+  focus: '워프 분기와 나눗셈을 없앤 GPU Plantard 산술로 Kyber NTT 가속'
   device: gpu
   url: https://doi.org/10.1109/les.2025.3598726
 
@@ -911,6 +1237,10 @@
   year: 2022
   venue: tcas-i
   field: pqc
+  scheme: [lattice-other]
+  ops: [linalg, polymul]
+  sys_opt: [hw-unit]
+  focus: '기계학습용 내적 명령(DP4A)으로 FrodoKEM 행렬곱과 Saber 합성곱 가속'
   device: gpu
   url: https://doi.org/10.1109/tcsi.2022.3176966
 
@@ -919,6 +1249,9 @@
   year: 2026
   venue: ieee-micro
   field: fhe
+  scheme: [ckks]
+  ops: [app, linear]
+  focus: '회전을 줄인 합성곱과 2차 활성화로 22.4ms CNN7 추론'
   device: gpu
   url: https://doi.org/10.1109/mm.2026.3665245
 
@@ -927,6 +1260,10 @@
   year: 2026
   venue: cluster-comput
   field: fhe
+  scheme: [ckks]
+  ops: [ntt]
+  sys_opt: [fusion]
+  focus: '전치 배치로 마지막 두 층을 건너뛴 단일 커널 NTT'
   device: gpu
   url: https://doi.org/10.1007/s10586-026-06260-0
 
@@ -935,6 +1272,9 @@
   year: 2026
   venue: springer-cybersecurity
   field: fhe
+  scheme: [other]
+  ops: [ntt, basis]
+  focus: 'GPU 미세구조 병목 분석과 전달 버퍼·텍스처 캐시 재활용'
   device: gpu
   url: https://doi.org/10.1186/s42400-025-00482-2
 
@@ -943,6 +1283,10 @@
   year: 2026
   venue: jksucis
   field: fhe
+  scheme: [kernel]
+  ops: [polymul, ntt]
+  sys_opt: [pipeline, fusion]
+  focus: '주파수 영역 Karatsuba 로 블록 다항식 곱 수를 줄인 NTT 곱셈'
   device: gpu
   url: https://doi.org/10.1007/s44443-026-00722-6
 
@@ -951,6 +1295,9 @@
   year: 2025
   venue: mdpi-mathematics
   field: fhe
+  scheme: [bfv-bgv, ckks]
+  ops: [keyswitch]
+  focus: 'BGV·BFV·CKKS 의 KLSS 키 전환을 GPU 로 가속'
   device: gpu
   url: https://doi.org/10.3390/math13233809
 
@@ -959,8 +1306,8 @@
   year: 2023
   venue: jpdc
   field: zkp
-  zkp_system: [groth16]
-  zkp_ops: [ntt, field]
+  scheme: [groth16]
+  ops: [ntt, field]
   focus: PTX 자리올림 몽고메리 곱, 공유 메모리 NTT
   device: gpu
   url: https://doi.org/10.1016/j.jpdc.2022.10.009
@@ -970,8 +1317,8 @@
   year: 2023
   venue: jsa
   field: zkp
-  zkp_system: [bulletproofs]
-  zkp_ops: [ipa]
+  scheme: [bulletproofs]
+  ops: [ipa]
   sys_opt: [cpu-gpu, pipeline]
   focus: CPU-GPU 협력 Bulletproofs 내적 논증
   device: gpu
@@ -982,8 +1329,8 @@
   year: 2025
   venue: integration
   field: zkp
-  zkp_system: [kernel]
-  zkp_ops: [msm]
+  scheme: [kernel]
+  ops: [msm]
   sys_opt: [multi-node, overlap, cpu-gpu, tuning]
   focus: 다중 노드 3단 MSM 분할
   device: gpu
@@ -994,6 +1341,10 @@
   year: 2026
   venue: preprint
   field: pqc
+  scheme: [lattice-other]
+  ops: [linalg, sampling]
+  sys_opt: [batch, resident, compiler]
+  focus: 'OpenACC 지시문으로 LWE KEM 을 GPU 에 올리고 연산 안 암호화를 묶음 처리'
   device: gpu
   url: https://doi.org/10.48550/arxiv.2606.01211
 
@@ -1002,6 +1353,10 @@
   year: 2025
   venue: preprint
   field: pqc
+  scheme: [ml-dsa, slh-dsa, lattice-other]
+  ops: [full]
+  sys_opt: [batch, overlap, tuning]
+  focus: 'CPU 참조 구현을 스레드당 인스턴스 하나로 옮긴 Dilithium·SPHINCS+·FrodoKEM 비교'
   device: gpu
   url: https://eprint.iacr.org/2025/1596
 
@@ -1010,8 +1365,8 @@
   year: 2026
   venue: preprint
   field: zkp
-  zkp_system: [plonk]
-  zkp_ops: [msm]
+  scheme: [plonk]
+  ops: [msm]
   focus: GPU PLONK 구현의 메모리 병목 분석
   device: gpu
   url: https://arxiv.org/abs/2611.09569
@@ -1021,6 +1376,10 @@
   year: 2026
   venue: preprint
   field: fhe
+  scheme: [tfhe]
+  ops: [bootstrap, fft, app]
+  sys_opt: [batch]
+  focus: 'WoP-PBS 조회와 테일러 보정으로 LLM 비선형층을 TFHE 로 계산'
   device: gpu
   url: https://doi.org/10.48550/arxiv.2604.04783
 
@@ -1029,6 +1388,10 @@
   year: 2026
   venue: preprint
   field: fhe
+  scheme: [ckks, bfv-bgv]
+  ops: [ntt, basis]
+  sys_opt: [batch]
+  focus: 'RNS 없는 기수 표현 CKKS·BGV 를 Numba 로 구현한 GPU 라이브러리'
   device: gpu
   url: https://doi.org/10.48550/arxiv.2607.05920
 
@@ -1037,6 +1400,10 @@
   year: 2025
   venue: preprint
   field: fhe
+  scheme: [ckks, bfv-bgv]
+  ops: [ntt, basis, app]
+  sys_opt: [fusion, concurrent]
+  focus: '큰 정수 모듈러 표 조회를 갖춘 고정밀 사적 데이터 질의용 GPU FHE 틀'
   device: gpu
   url: https://doi.org/10.48550/arxiv.2503.22227
 
@@ -1045,5 +1412,9 @@
   year: 2025
   venue: preprint
   field: fhe
+  scheme: [kernel]
+  ops: [ntt]
+  sys_opt: [compiler]
+  focus: 'NTT 를 행렬-벡터 곱 텐서 연산으로 바꾸고 언어 모델로 코드 생성'
   device: gpu
   url: https://doi.org/10.48550/arxiv.2502.11110

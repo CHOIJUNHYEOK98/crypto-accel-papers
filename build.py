@@ -31,7 +31,9 @@ PARTS = [  # (kind, 앵커, 제목)
 PREPRINT_LEAD = "학회·저널 게재를 확인하지 못한 IACR ePrint·arXiv 원고다."
 VENUE_KEYS = {"id", "abbr", "name", "kind", "group", "bk21", "kiise"}
 PAPER_KEYS = {"title", "authors", "year", "venue", "field", "device", "url", "gpu_partial", "note",
-              "zkp_system", "zkp_ops", "sys_opt", "focus"}
+              "scheme", "ops", "sys_opt", "focus"}
+VOCAB_OF = {"pqc": "pqc", "zkp": "zkp", "fhe": "fhe", "ntt": "pqc"}  # 분야 → 이름표(공통 NTT 편은 PQC 이름표)
+GUIDE_TITLE = {"pqc": "PQC 방식과 부하 연산", "zkp": "ZKP 증명 체계 계열과 부하 연산", "fhe": "FHE 방식과 부하 연산"}
 
 
 def esc(s):
@@ -45,10 +47,8 @@ def attr(s):
 def load():
     venues = yaml.safe_load((ROOT / "data" / "venues.yml").read_text(encoding="utf-8"))
     papers = yaml.safe_load((ROOT / "data" / "papers.yml").read_text(encoding="utf-8"))
-    zkp = yaml.safe_load((ROOT / "data" / "zkp.yml").read_text(encoding="utf-8"))
-    sys_keys = [x["key"] for x in zkp["systems"]]
-    op_keys = [x["key"] for x in zkp["ops"]]
-    so_keys = [x["key"] for x in zkp["sys_opts"]]
+    tax = yaml.safe_load((ROOT / "data" / "taxonomy.yml").read_text(encoding="utf-8"))
+    so_keys = [x["key"] for x in tax["sys_opts"]]
     errors = []
     ids = set()
     for v in venues:
@@ -90,23 +90,21 @@ def load():
             errors.append(f"{where}: year 는 정수")
         if not isinstance(p.get("authors"), list):
             errors.append(f"{where}: authors 는 목록([이름, 이름])")
-        if p.get("field") == "zkp":
-            for k, allowed in (("zkp_system", sys_keys), ("zkp_ops", op_keys)):
-                vals = p.get(k)
-                if not isinstance(vals, list) or not vals:
-                    errors.append(f"{where}: ZKP 논문은 {k} 목록이 필요하다")
-                elif set(vals) - set(allowed):
-                    errors.append(f"{where}: {k} 의 {sorted(set(vals) - set(allowed))} 가 data/zkp.yml 에 없다")
-            if "sys_opt" in p:
-                vals = p["sys_opt"]
-                if not isinstance(vals, list) or not vals:
-                    errors.append(f"{where}: sys_opt 는 비어 있지 않은 목록(없으면 칸을 지운다)")
-                elif set(vals) - set(so_keys):
-                    errors.append(f"{where}: sys_opt 의 {sorted(set(vals) - set(so_keys))} 가 data/zkp.yml 에 없다")
-        else:
-            for k in ("zkp_system", "zkp_ops", "sys_opt"):
-                if k in p:
-                    errors.append(f"{where}: {k} 는 ZKP 논문에만 쓴다")
+        voc = tax["fields"].get(VOCAB_OF.get(p.get("field"), ""), {})
+        for k, allowed in (("scheme", [x["key"] for x in voc.get("schemes", [])]),
+                           ("ops", [x["key"] for x in voc.get("ops", [])])):
+            vals = p.get(k)
+            if not isinstance(vals, list) or not vals:
+                errors.append(f"{where}: {k} 목록이 필요하다")
+            elif set(vals) - set(allowed):
+                errors.append(f"{where}: {k} 의 {sorted(set(vals) - set(allowed))} 가 data/taxonomy.yml 의 "
+                              f"{VOCAB_OF.get(p.get('field'))} 이름표에 없다")
+        if "sys_opt" in p:
+            vals = p["sys_opt"]
+            if not isinstance(vals, list) or not vals:
+                errors.append(f"{where}: sys_opt 는 비어 있지 않은 목록(없으면 칸을 지운다)")
+            elif set(vals) - set(so_keys):
+                errors.append(f"{where}: sys_opt 의 {sorted(set(vals) - set(so_keys))} 가 data/taxonomy.yml 에 없다")
         if "focus" in p and not isinstance(p["focus"], str):
             errors.append(f"{where}: focus 는 한 줄 문자열")
         key = " ".join(str(p.get("title", "")).lower().split())
@@ -115,24 +113,25 @@ def load():
         seen[key] = i + 1
     if errors:
         sys.exit("자료 오류:\n  " + "\n  ".join(errors))
-    return venues, papers, zkp
+    return venues, papers, tax
 
 
-def paper_li(p, zkp):
+def labels_of(tax, field):
+    voc = tax["fields"][VOCAB_OF[field]]
+    return ({x["key"]: x["label"] for x in voc["schemes"]}, {x["key"]: x["label"] for x in voc["ops"]},
+            {x["key"]: x["label"] for x in tax["sys_opts"]})
+
+
+def paper_li(p, tax):
     q = p["title"].lower() + " " + ", ".join(a.lower() for a in p["authors"])
-    extra = ""
-    sattr = ""
-    if p.get("zkp_system"):
-        sl = {x["key"]: x["label"] for x in zkp["systems"]}
-        ol = {x["key"]: x["label"] for x in zkp["ops"]}
-        so = {x["key"]: x["label"] for x in zkp["sys_opts"]}
-        sys_opt = p.get("sys_opt", [])
-        labels = [sl[k] for k in p["zkp_system"]] + [ol[k] for k in p["zkp_ops"]] + [so[k] for k in sys_opt]
-        q += " " + " ".join(labels).lower()
-        sattr = f' data-s="{" ".join(p["zkp_system"])}"'
-        extra += ('<span class="zk">' + "".join(f'<span class="sys">{esc(sl[k])}</span>' for k in p["zkp_system"])
-                  + "".join(f'<span class="op">{esc(ol[k])}</span>' for k in p["zkp_ops"])
-                  + "".join(f'<span class="so">{esc(so[k])}</span>' for k in sys_opt) + "</span>")
+    sl, ol, so = labels_of(tax, p["field"])
+    sys_opt = p.get("sys_opt", [])
+    q += " " + " ".join([sl[k] for k in p["scheme"]] + [ol[k] for k in p["ops"]] + [so[k] for k in sys_opt]).lower()
+    vf = VOCAB_OF[p["field"]]
+    sattr = f' data-s="{" ".join(vf + ":" + k for k in p["scheme"])}"'
+    extra = ('<span class="zk">' + "".join(f'<span class="sys s-{vf}">{esc(sl[k])}</span>' for k in p["scheme"])
+             + "".join(f'<span class="op">{esc(ol[k])}</span>' for k in p["ops"])
+             + "".join(f'<span class="so">{esc(so[k])}</span>' for k in sys_opt) + "</span>")
     if p.get("focus"):
         q += " " + p["focus"].lower()
         extra += f'<span class="fo">{esc(p["focus"])}</span>'
@@ -150,7 +149,7 @@ def paper_li(p, zkp):
             f'<span class="ti">{title}<span class="au">{esc(au)}</span>{tags}{extra}</span></li>')
 
 
-def venue_section(v, ps, zkp):
+def venue_section(v, ps, tax):
     head = f'<h4>{esc(v["abbr"])}</h4>'
     if v.get("bk21"):
         head += (f'<span class="bk bk{v["bk21"]}" title="BK21플러스 IF (2018) {v["bk21"]}점">'
@@ -166,11 +165,11 @@ def venue_section(v, ps, zkp):
         if not fp:
             continue
         body += (f'<div class="dom" data-d="{key}"><h5><span class="dot d-{key}"></span>{label} '
-                 f'<span class="cnt">{len(fp)}</span></h5><ul>' + "".join(paper_li(p, zkp) for p in fp) + "</ul></div>")
+                 f'<span class="cnt">{len(fp)}</span></h5><ul>' + "".join(paper_li(p, tax) for p in fp) + "</ul></div>")
     return f'<section class="venue"{idattr}><header class="vh">{head}</header>{body}</section>'
 
 
-def render(venues, papers, zkp):
+def render(venues, papers, tax):
     papers = [p for p in papers if p["device"] == "gpu"]
     by_venue = {}
     for p in papers:
@@ -186,7 +185,7 @@ def render(venues, papers, zkp):
         if kind == "preprint":
             rows.append((title, Counter(p["field"] for v in vs for p in by_venue[v["id"]])))
             s += f'<p class="lead">{PREPRINT_LEAD}</p><div class="venues">'
-            s += "".join(venue_section(v, by_venue[v["id"]], zkp) for v in vs) + "</div>"
+            s += "".join(venue_section(v, by_venue[v["id"]], tax) for v in vs) + "</div>"
         else:
             groups = []
             for v in vs:
@@ -196,7 +195,7 @@ def render(venues, papers, zkp):
                 gv = [v for v in vs if v["group"] == g]
                 rows.append((f"{title} · {g}", Counter(p["field"] for v in gv for p in by_venue[v["id"]])))
                 s += f'<h3>{esc(g)}</h3><div class="venues">'
-                s += "".join(venue_section(v, by_venue[v["id"]], zkp) for v in gv) + "</div>"
+                s += "".join(venue_section(v, by_venue[v["id"]], tax) for v in gv) + "</div>"
         parts_html.append(s + "</section>")
 
     def cells(c):
@@ -208,32 +207,38 @@ def render(venues, papers, zkp):
              + f'<tr class="total"><th>합계</th>{cells(total)}</tr></tbody></table></div>')
     kpis = f"      <span>전체 <b>{len(papers)}</b>편</span>\n" + "\n".join(
         f'      <span><i class="dot d-{k}"></i>{h} <b>{total[k]}</b></span>' for k, _, h in FIELDS[:3])
-    zp = [p for p in papers if p["field"] == "zkp"]
-    cnt = Counter(k for p in zp for k in p["zkp_system"])
-    socnt = Counter(k for p in zp for k in p.get("sys_opt", []))
-    systems = [x for x in zkp["systems"] if cnt[x["key"]]]
-    guide = ('  <section class="guide" id="zkp-guide"><h2>ZKP 증명 체계 계열과 부하 연산</h2>'
-             '<p class="lead">ZKP 논문마다 증명 체계 계열(주황 테두리), 가속한 연산(회색 바탕), 시스템 관점 최적화(점선 테두리), 핵심 아이디어(아래 줄)를 적었습니다. '
-             '여러 체계로 평가한 논문은 계열을 여럿 적었습니다. 아래 표의 부하 연산은 각 계열의 증명 생성에서 시간을 많이 쓰는 연산과 그 근거입니다.</p>'
-             '<div class="tablewrap"><table class="mat"><thead><tr><th>계열</th><th>부하 연산</th><th>편수</th></tr></thead><tbody>'
-             + "".join(f'<tr><th>{esc(x["label"])}</th><td>{esc(x["load"])}</td><td class="n">{cnt[x["key"]]}</td></tr>' for x in systems)
-             + "</tbody></table></div>"
-             '<h3>시스템 관점 최적화</h3><p class="lead">연산 알고리즘 자체가 아니라 실행 구조·자원 활용을 바꾼 최적화입니다.</p>'
-             '<div class="tablewrap"><table class="mat"><thead><tr><th>항목</th><th>뜻</th><th>편수</th></tr></thead><tbody>'
-             + "".join(f'<tr><th><span class="so">{esc(x["label"])}</span></th><td>{esc(x["desc"])}</td><td class="n">{socnt[x["key"]]}</td></tr>'
-                       for x in zkp["sys_opts"] if socnt[x["key"]])
-             + "</tbody></table></div></section>")
-    select = ('    <select id="sys" aria-label="ZKP 증명 체계 계열로 거르기"><option value="all">ZKP 계열 전체</option>'
-              + "".join(f'<option value="{x["key"]}">{esc(x["label"])} ({cnt[x["key"]]})</option>' for x in systems)
-              + "</select>")
+    guide = ('  <section class="guide" id="guide"><h2>방식·연산·최적화 표시</h2>'
+             '<p class="lead">논문마다 구현·평가한 방식(색 테두리), 가속한 연산(회색 바탕), 시스템 관점 최적화(점선 테두리), '
+             '핵심 아이디어(아래 줄)를 적었습니다. 여러 방식으로 평가한 논문은 방식을 여럿 적었습니다. '
+             '아래 표의 부하 연산은 각 방식에서 시간을 많이 쓰는 연산과 그 근거입니다.</p>')
+    options = ""
+    for f in ("pqc", "zkp", "fhe"):
+        fp = [p for p in papers if VOCAB_OF[p["field"]] == f]
+        cnt = Counter(k for p in fp for k in p["scheme"])
+        schemes = [x for x in tax["fields"][f]["schemes"] if cnt[x["key"]]]
+        guide += (f'<h3><span class="dot d-{f}"></span>{GUIDE_TITLE[f]}</h3>'
+                  '<div class="tablewrap"><table class="mat"><thead><tr><th>방식</th><th>부하 연산</th><th>편수</th></tr></thead><tbody>'
+                  + "".join(f'<tr><th>{esc(x["label"])}</th><td>{esc(x["load"])}</td><td class="n">{cnt[x["key"]]}</td></tr>'
+                            for x in schemes) + "</tbody></table></div>")
+        options += (f'<optgroup label="{f.upper()}">'
+                    + "".join(f'<option value="{f}:{x["key"]}">{esc(x["label"])} ({cnt[x["key"]]})</option>' for x in schemes)
+                    + "</optgroup>")
+    socnt = {f: Counter(k for p in papers if VOCAB_OF[p["field"]] == f for k in p.get("sys_opt", [])) for f in ("pqc", "zkp", "fhe")}
+    guide += ('<h3>시스템 관점 최적화</h3><p class="lead">연산 알고리즘 자체가 아니라 실행 구조·자원 활용을 바꾼 최적화입니다.</p>'
+              '<div class="tablewrap"><table class="mat"><thead><tr><th>항목</th><th>뜻</th><th>PQC</th><th>ZKP</th><th>FHE</th></tr></thead><tbody>'
+              + "".join(f'<tr><th><span class="so">{esc(x["label"])}</span></th><td>{esc(x["desc"])}</td>'
+                        + "".join(f'<td class="n">{socnt[f][x["key"]] or "·"}</td>' for f in ("pqc", "zkp", "fhe")) + "</tr>"
+                        for x in tax["sys_opts"] if any(socnt[f][x["key"]] for f in socnt))
+              + "</tbody></table></div></section>")
+    select = ('    <select id="sys" aria-label="방식으로 거르기"><option value="all">방식 전체</option>' + options + "</select>")
     tpl = TEMPLATE.read_text(encoding="utf-8")
-    return (tpl.replace("{{kpis}}", kpis).replace("{{table}}", table).replace("{{zkpguide}}", guide)
+    return (tpl.replace("{{kpis}}", kpis).replace("{{table}}", table).replace("{{guide}}", guide)
             .replace("{{sysselect}}", select).replace("{{parts}}", "\n".join(parts_html)))
 
 
 def main():
-    venues, papers, zkp = load()
-    out = render(venues, papers, zkp)
+    venues, papers, tax = load()
+    out = render(venues, papers, tax)
     if "--check" in sys.argv:
         if not OUT.exists() or OUT.read_text(encoding="utf-8") != out:
             sys.exit("site/index.html 이 data/ 와 다르다 — python3 build.py 로 다시 만들어 함께 커밋한다")
