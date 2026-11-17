@@ -29,6 +29,7 @@ PARTS = [  # (kind, 앵커, 제목)
     ("preprint", "preprint", "예비 공개본"),
 ]
 PREPRINT_LEAD = "학회·저널 게재를 확인하지 못한 IACR ePrint·arXiv 원고다."
+KIISE_RANK = {"최우수": 0, "우수": 1}
 VENUE_KEYS = {"id", "abbr", "name", "kind", "group", "bk21", "kiise"}
 PAPER_KEYS = {"title", "authors", "year", "venue", "field", "device", "url", "gpu_partial", "note",
               "scheme", "ops", "sys_opt", "focus"}
@@ -199,6 +200,8 @@ def render(venues, papers, tax):
                     groups.append(v["group"])
             for g in groups:
                 gv = [v for v in vs if v["group"] == g]
+                if kind == "conference":  # 학회는 소분류 안에서 BK21 점수 → 정보과학회 등급 높은 순(동점은 파일 순서)
+                    gv.sort(key=lambda v: (-(v.get("bk21") or 0), KIISE_RANK.get(v.get("kiise"), 2)))
                 rows.append((f"{title} · {g}", Counter(p["field"] for v in gv for p in by_venue[v["id"]])))
                 s += f'<h3>{esc(g)}</h3><div class="venues">'
                 s += "".join(venue_section(v, by_venue[v["id"]], tax) for v in gv) + "</div>"

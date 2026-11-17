@@ -1,4 +1,4 @@
-# 출판처 목록 — 페이지에 나오는 순서대로 적는다.
+# 출판처 목록 — 소분류(group)와 저널은 적힌 순서대로 페이지에 나온다. 학회는 같은 소분류 안에서 bk21 → kiise 높은 순으로 생성기가 정렬한다(동점은 적힌 순서).
 # id: 논문의 venue 칸이 가리키는 이름 / kind: conference·journal·preprint
 # group: 학회·저널 안의 소분류 제목(페이지의 작은 제목) / bk21: BK21플러스 IF (2018) 점수 / kiise: 한국정보과학회 (2024) 등급(최우수·우수)
 # 학회는 CS 분야 우수 학술대회 목록(https://gist.github.com/Pusnow/6eb933355b5cb8d31ef1abcb3c3e1206)에 실린 곳만 싣는다.

@@ -93,6 +93,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .pq-no{color:var(--muted);border:1px solid var(--line)}
 .pq-depends{color:var(--muted);border:1px dashed var(--line)}
 .fo{display:block;font-size:.84rem;color:var(--fg);opacity:.85;margin-top:2px}
+.folds{display:flex;flex-direction:column;gap:10px}
 .fold{display:block;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 14px}
 .fold>summary{cursor:pointer;list-style:none;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
 .fold>summary::-webkit-details-marker{display:none}
@@ -122,11 +123,13 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <p class="bkkey"><span class="bk bk4">BK 4</span><span class="bk bk3">BK 3</span><span class="bk">BK 2</span><span class="bk">BK 1</span><span class="ks ks1">정보과학회 최우수</span><span class="ks">정보과학회 우수</span>학회 이름 옆 표시는 BK21플러스 IF (2018) 점수와 한국정보과학회 (2024) 우수 학술대회 등급입니다. 학회는 그 표에 있는 곳만 실었습니다. 저널은 그 표의 대상이 아니라 점수가 없습니다.</p>
   </header>
 
+  <div class="folds">
   <details class="fold" id="stats"><summary><h2>출판처 묶음·분야별 편수 집계</h2><span class="hint">학회·저널 소분류마다 PQC·ZKP·FHE 편수 — 눌러서 펼치기</span></summary>
     {{table}}
   </details>
 
 {{guide}}
+  </div>
 
   <div class="bar" role="search">
     <button class="chip" type="button" id="f-all" data-f="all" aria-pressed="true">전체</button>
