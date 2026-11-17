@@ -44,41 +44,6 @@
   group: 컴퓨터 구조
   bk21: 1
   kiise: 우수
-- id: ics
-  abbr: ICS
-  name: ACM International Conference on Supercomputing
-  kind: conference
-  group: 병렬·고성능 계산
-  bk21: 2
-  kiise: 우수
-- id: ipdps
-  abbr: IPDPS
-  name: IEEE International Parallel and Distributed Processing Symposium
-  kind: conference
-  group: 병렬·고성능 계산
-  bk21: 2
-  kiise: 우수
-- id: ppopp
-  abbr: PPoPP
-  name: ACM SIGPLAN Annual Symposium on Principles and Practice of Parallel Programming
-  kind: conference
-  group: 병렬·고성능 계산
-  bk21: 3
-  kiise: 최우수
-- id: sc
-  abbr: SC
-  name: International Conference for High Performance Computing, Networking, Storage and Analysis
-  kind: conference
-  group: 병렬·고성능 계산
-  bk21: 3
-  kiise: 최우수
-- id: hpdc
-  abbr: HPDC
-  name: ACM International Symposium on High-Performance Parallel and Distributed Computing (HPDC)
-  kind: conference
-  group: 병렬·고성능 계산
-  bk21: 2
-  kiise: 우수
 - id: ccs
   abbr: CCS
   name: ACM SIGSAC Conference on Computer and Communications Security
@@ -114,6 +79,41 @@
   group: 보안·암호
   bk21: 2
   kiise: 최우수
+- id: ics
+  abbr: ICS
+  name: ACM International Conference on Supercomputing
+  kind: conference
+  group: 병렬·고성능 계산
+  bk21: 2
+  kiise: 우수
+- id: ipdps
+  abbr: IPDPS
+  name: IEEE International Parallel and Distributed Processing Symposium
+  kind: conference
+  group: 병렬·고성능 계산
+  bk21: 2
+  kiise: 우수
+- id: ppopp
+  abbr: PPoPP
+  name: ACM SIGPLAN Annual Symposium on Principles and Practice of Parallel Programming
+  kind: conference
+  group: 병렬·고성능 계산
+  bk21: 3
+  kiise: 최우수
+- id: sc
+  abbr: SC
+  name: International Conference for High Performance Computing, Networking, Storage and Analysis
+  kind: conference
+  group: 병렬·고성능 계산
+  bk21: 3
+  kiise: 최우수
+- id: hpdc
+  abbr: HPDC
+  name: ACM International Symposium on High-Performance Parallel and Distributed Computing (HPDC)
+  kind: conference
+  group: 병렬·고성능 계산
+  bk21: 2
+  kiise: 우수
 - id: date
   abbr: DATE
   name: Design, Automation and Test in Europe Conference (DATE)
