@@ -30,7 +30,7 @@ PARTS = [  # (kind, 앵커, 제목)
 ]
 PREPRINT_LEAD = "학회·저널 게재를 확인하지 못한 IACR ePrint·arXiv 원고다."
 KIISE_RANK = {"최우수": 0, "우수": 1}
-VENUE_KEYS = {"id", "abbr", "name", "kind", "group", "bk21", "kiise"}
+VENUE_KEYS = {"id", "abbr", "name", "kind", "group", "bk21", "kiise", "jif", "jif_year", "pin"}
 PAPER_KEYS = {"title", "authors", "year", "venue", "field", "device", "url", "gpu_partial", "note",
               "scheme", "ops", "sys_opt", "focus"}
 VOCAB_OF = {"pqc": "pqc", "zkp": "zkp", "fhe": "fhe", "ntt": "pqc"}  # 분야 → 이름표(공통 NTT 편은 PQC 이름표)
@@ -71,6 +71,11 @@ def load():
             errors.append(f"출판처 {v.get('id')}: kiise 는 최우수·우수 중 하나")
         if v.get("bk21") not in (None, 1, 2, 3, 4):
             errors.append(f"출판처 {v.get('id')}: bk21 은 1~4")
+        if v.get("jif") is not None and (v.get("kind") != "journal" or not isinstance(v["jif"], (int, float))
+                                         or not isinstance(v.get("jif_year"), int)):
+            errors.append(f"출판처 {v.get('id')}: jif 는 저널에만, 숫자로, jif_year(JCR 판 연도)와 함께")
+        if v.get("pin") not in (None, True):
+            errors.append(f"출판처 {v.get('id')}: pin 은 true 만")
     seen = {}
     for i, p in enumerate(papers):
         where = f"논문 {i + 1}번째({p.get('title', '?')[:40]})"
@@ -164,6 +169,8 @@ def venue_section(v, ps, tax):
     if v.get("kiise"):
         cls = "ks ks1" if v["kiise"] == "최우수" else "ks"
         head += f'<span class="{cls}" title="한국정보과학회 (2024) {v["kiise"]}">정보과학회 {v["kiise"]}</span>'
+    if v.get("jif") is not None:
+        head += f'<span class="jif" title="JCR {v["jif_year"]} Journal Impact Factor">(IF {v["jif"]:.1f})</span>'
     head += f'<span class="vn">{esc(v.get("name") or "")}</span><span class="vc">{len(ps)}편</span>'
     idattr = "" if v["kind"] == "preprint" else f' id="v-{v["id"]}"'
     body = ""
@@ -202,6 +209,8 @@ def render(venues, papers, tax):
                 gv = [v for v in vs if v["group"] == g]
                 if kind == "conference":  # 학회는 소분류 안에서 BK21 점수 → 정보과학회 등급 높은 순(동점은 파일 순서)
                     gv.sort(key=lambda v: (-(v.get("bk21") or 0), KIISE_RANK.get(v.get("kiise"), 2)))
+                else:  # 저널은 pin(맨 위 고정) → IF 높은 순(IF 없으면 뒤, 동점은 파일 순서)
+                    gv.sort(key=lambda v: (not v.get("pin"), v.get("jif") is None, -(v.get("jif") or 0)))
                 rows.append((f"{title} · {g}", Counter(p["field"] for v in gv for p in by_venue[v["id"]])))
                 s += f'<h3>{esc(g)}</h3><div class="venues">'
                 s += "".join(venue_section(v, by_venue[v["id"]], tax) for v in gv) + "</div>"

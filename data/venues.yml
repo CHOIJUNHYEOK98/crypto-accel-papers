@@ -1,6 +1,7 @@
-# 출판처 목록 — 소분류(group)와 저널은 적힌 순서대로 페이지에 나온다. 학회는 같은 소분류 안에서 bk21 → kiise 높은 순으로 생성기가 정렬한다(동점은 적힌 순서).
+# 출판처 목록 — 소분류(group)는 적힌 순서대로 페이지에 나온다. 학회는 같은 소분류 안에서 bk21 → kiise 높은 순으로 생성기가 정렬한다(동점은 적힌 순서).
 # id: 논문의 venue 칸이 가리키는 이름 / kind: conference·journal·preprint
 # group: 학회·저널 안의 소분류 제목(페이지의 작은 제목) / bk21: BK21플러스 IF (2018) 점수 / kiise: 한국정보과학회 (2024) 등급(최우수·우수)
+# 저널만: jif: Clarivate JCR 2년 Journal Impact Factor / jif_year: 그 JCR 판 연도(2025 = 2026년 6월 공개판) / pin: true 면 같은 소분류 맨 위 고정. 저널은 소분류 안에서 pin → jif 높은 순(jif 없으면 뒤)으로 생성기가 정렬한다.
 # 학회는 CS 분야 우수 학술대회 목록(https://gist.github.com/Pusnow/6eb933355b5cb8d31ef1abcb3c3e1206)에 실린 곳만 싣는다.
 - id: asplos
   abbr: ASPLOS
@@ -153,91 +154,126 @@
   name: IACR Transactions on Cryptographic Hardware and Embedded Systems
   kind: journal
   group: 주요 저널
+  pin: true   # 저널 맨 위 고정. JCR IF 는 확인하지 못해 비움
 - id: tpds
   abbr: IEEE TPDS
   name: IEEE Transactions on Parallel and Distributed Systems
   kind: journal
   group: 주요 저널
+  jif: 5.9
+  jif_year: 2025
 - id: tc
   abbr: IEEE TC
   name: IEEE Transactions on Computers
   kind: journal
   group: 주요 저널
+  jif: 4.9
+  jif_year: 2025
 - id: tifs
   abbr: IEEE TIFS
   name: IEEE Transactions on Information Forensics and Security
   kind: journal
   group: 주요 저널
+  jif: 8.7
+  jif_year: 2025
 - id: tdsc
   abbr: IEEE TDSC
   name: IEEE Transactions on Dependable and Secure Computing
   kind: journal
   group: 주요 저널
+  jif: 6.8
+  jif_year: 2025
 - id: iotj
   abbr: IEEE IoT-J
   name: IEEE Internet of Things Journal
   kind: journal
   group: 주요 저널
+  jif: 8.7
+  jif_year: 2025
 - id: taco
   abbr: ACM TACO
   name: ACM Transactions on Architecture and Code Optimization
   kind: journal
   group: 주요 저널
+  jif: 2.9
+  jif_year: 2025
 - id: access
   abbr: IEEE Access
   name: ''
   kind: journal
   group: 기타 저널
+  jif: 4.2
+  jif_year: 2025
 - id: les
   abbr: IEEE ESL
   name: IEEE Embedded Systems Letters
   kind: journal
   group: 기타 저널
+  jif: 1.7
+  jif_year: 2025
 - id: tcas-i
   abbr: IEEE TCAS-I
   name: 'IEEE Transactions on Circuits and Systems I: Regular Papers'
   kind: journal
   group: 기타 저널
+  jif: 5.6
+  jif_year: 2025
 - id: ieee-micro
   abbr: IEEE Micro
   name: IEEE Micro (학술지)
   kind: journal
   group: 기타 저널
+  jif: 4.4
+  jif_year: 2025
 - id: cluster-comput
   abbr: Cluster Computing
   name: Cluster Computing (Springer 학술지)
   kind: journal
   group: 기타 저널
+  jif: 5.5
+  jif_year: 2025
 - id: springer-cybersecurity
   abbr: Cybersecurity
   name: Cybersecurity (SpringerOpen 학술지)
   kind: journal
   group: 기타 저널
+  jif: 4.1
+  jif_year: 2025
 - id: jksucis
   abbr: JKSU-CIS
   name: Journal of King Saud University – Computer and Information Sciences
   kind: journal
   group: 기타 저널
+  jif: 6.4
+  jif_year: 2025
 - id: mdpi-mathematics
   abbr: Mathematics (MDPI)
   name: ''
   kind: journal
   group: 기타 저널
+  jif: 2.3
+  jif_year: 2025
 - id: jpdc
   abbr: JPDC
   name: Journal of Parallel and Distributed Computing
   kind: journal
   group: 기타 저널
+  jif: 3.4
+  jif_year: 2025
 - id: jsa
   abbr: JSA
   name: Journal of Systems Architecture
   kind: journal
   group: 기타 저널
+  jif: 5.3
+  jif_year: 2025
 - id: integration
   abbr: INTEGRATION
   name: Integration, the VLSI Journal
   kind: journal
   group: 기타 저널
+  jif: 2.6
+  jif_year: 2025
 - id: preprint
   abbr: ePrint · arXiv
   name: ''
