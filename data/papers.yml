@@ -1418,3 +1418,49 @@
   focus: 'NTT 를 행렬-벡터 곱 텐서 연산으로 바꾸고 언어 모델로 코드 생성'
   device: gpu
   url: https://doi.org/10.48550/arxiv.2502.11110
+
+- title: Fine-Grained Parallelization of FHE Workloads in Multi-GPU Systems
+  authors: [Homer Gamil, Michail Maniatakos]
+  year: 2026
+  venue: aspdac
+  field: fhe
+  scheme: [ckks]
+  ops: [keyswitch, ntt, basis]
+  sys_opt: [multi-gpu, tuning]
+  focus: 'FHE 연산의 하위 함수마다 GPU 간 분해 방식을 비용 기반 동적 계획으로 골라 다중 GPU 에 나눔'
+  device: gpu
+  url: https://doi.org/10.1109/asp-dac66049.2026.11420487
+
+- title: Improved Implementation of Number Theoretic Transform on NVIDIA GPU with Tensor Cores
+  authors: [Yukimasa Sugizaki, Daisuke Takahashi]
+  year: 2026
+  venue: hpcasia
+  field: ntt
+  scheme: [kernel]
+  ops: [ntt]
+  sys_opt: [hw-unit]
+  focus: '텐서 코어 정수 행렬곱 NTT — 피연산자 순서로 전치를 없애고 워프 셔플로 공유 메모리 없이 레지스터에서 이어 감'
+  device: gpu
+  url: https://doi.org/10.1145/3773656.3773673
+
+- title: High-Performance Implementations of Classic McEliece KEM on GPUs
+  authors: [Dingyan Xu, Yiwen Gao, Yongbin Zhou, Jian Weng]
+  year: 2025
+  venue: iscas
+  field: pqc
+  scheme: [mceliece]
+  ops: [decode, full]
+  focus: '캡슐화·복호화를 여러 커널로 나누고 긴 루프를 여러 스레드로 쪼개 낮은 부하 지연을 줄인 Classic McEliece'
+  device: gpu
+  url: https://doi.org/10.1109/iscas56072.2025.11043393
+
+- title: Hybrid-Grained GPU Implementations for the Classic McEliece
+  authors: [Dingyan Xu, Yiwen Gao, Yongbin Zhou, Jian Weng]
+  year: 2025
+  venue: ispa
+  field: pqc
+  scheme: [mceliece]
+  ops: [decode, full]
+  focus: '커널마다 작업당 스레드 수를 따로 정하는 혼합 입도 분할과 신드롬 다중 비트 XOR 축약'
+  device: gpu
+  url: https://doi.org/10.1109/ispa67752.2025.00164
