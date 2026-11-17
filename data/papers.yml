@@ -1464,3 +1464,63 @@
   focus: '커널마다 작업당 스레드 수를 따로 정하는 혼합 입도 분할과 신드롬 다중 비트 XOR 축약'
   device: gpu
   url: https://doi.org/10.1109/ispa67752.2025.00164
+
+- title: Over 100x Faster Bootstrapping in Fully Homomorphic Encryption through Memory-centric Optimization with GPUs
+  authors: [Wonkyung Jung, Sangpyo Kim, Jung Ho Ahn, Jung Hee Cheon, Younho Lee]
+  year: 2021
+  venue: tches
+  field: fhe
+  scheme: [ckks]
+  ops: [bootstrap, ntt, keyswitch]
+  sys_opt: [fusion, memory]
+  focus: '첫 GPU CKKS 부트스트래핑 — 병목이 메모리 대역폭임을 보이고 커널 융합·주요 함수 재배치로 해소'
+  device: gpu
+  url: https://doi.org/10.46586/tches.v2021.i4.114-148
+
+- title: 'Anaheim: Architecture and Algorithms for Processing Fully Homomorphic Encryption in Memory'
+  authors: [Jongmin Kim, Sungmin Yun, Hyesung Ji, Wonseok Choi, Sangpyo Kim, Jung Ho Ahn]
+  year: 2025
+  venue: hpca
+  field: fhe
+  scheme: [ckks]
+  ops: [basis, ntt]
+  sys_opt: [hw-ext]
+  focus: 'GPU 의 FHE 병목인 원소별 연산을 메모리 안 연산(PIM)으로 넘기는 GPU+PIM 구조와 실행 흐름'
+  device: gpu
+  url: https://doi.org/10.1109/hpca61900.2025.00089
+
+- title: 'HELM: Navigating Homomorphic Encryption Through Gates and Lookup Tables'
+  authors: [Charles Gouert, Dimitris Mouris, Nektarios Georgios Tsoutsos]
+  year: 2025
+  venue: tifs
+  field: fhe
+  scheme: [tfhe]
+  ops: [bootstrap, app]
+  sys_opt: [batch]
+  gpu_partial: true
+  focus: 'HDL 회로를 동형 게이트·조회표 회로로 바꿔 평가하는 체계 — GPU 모드는 회로 한 층을 묶어 게이트 평가'
+  device: gpu
+  url: https://doi.org/10.1109/tifs.2025.3544066
+
+- title: 'Air-FRI: Acceleration of the FRI Protocol on the GPU for ZkSNARK Applications'
+  authors: [Tanmayi Jandhyala, Guang Gong]
+  year: 2026
+  venue: sac
+  field: zkp
+  scheme: [plonkish-fri]
+  ops: [ntt, hash, field]
+  sys_opt: [precompute]
+  focus: 'FRI 의 RS 부호어 병렬 계산·유한체 연산 미리 계산·단일 머클 트리 약정을 GPU 로'
+  device: gpu
+  url: https://doi.org/10.1007/978-3-032-10536-3_12
+
+- title: Accelerating zk-SNARK with Group and Zone Optimization on GPU
+  authors: [Runnan Shen, Liang Wang, Haotian Luo, Rui Yang, Jinqian Yang, Jinquan Wang, Qiancheng Sun, Limin Xiao, Jin Dong]
+  year: 2023
+  venue: icpads
+  field: zkp
+  scheme: [groth16]
+  ops: [msm]
+  focus: 'Pippenger MSM 의 버킷 모으기를 병렬 접두 합으로 줄이고 데이터 크기별 묶음 크기 범위 제시'
+  device: gpu
+  url: https://doi.org/10.1109/icpads60453.2023.00013
