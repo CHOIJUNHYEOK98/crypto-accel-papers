@@ -30,7 +30,7 @@ PARTS = [  # (kind, 앵커, 제목)
 ]
 PREPRINT_LEAD = "학회·저널 게재를 확인하지 못한 IACR ePrint·arXiv 원고다."
 KIISE_RANK = {"최우수": 0, "우수": 1}
-VENUE_KEYS = {"id", "abbr", "name", "kind", "group", "bk21", "kiise", "jif", "jif_year", "pin"}
+VENUE_KEYS = {"id", "abbr", "name", "kind", "group", "bk21", "kiise", "jif", "jif_year", "jif_q", "pin"}
 PAPER_KEYS = {"title", "authors", "year", "venue", "field", "device", "url", "gpu_partial", "note",
               "scheme", "ops", "sys_opt", "focus"}
 VOCAB_OF = {"pqc": "pqc", "zkp": "zkp", "fhe": "fhe", "ntt": "pqc"}  # 분야 → 이름표(공통 NTT 편은 PQC 이름표)
@@ -74,6 +74,8 @@ def load():
         if v.get("jif") is not None and (v.get("kind") != "journal" or not isinstance(v["jif"], (int, float))
                                          or not isinstance(v.get("jif_year"), int)):
             errors.append(f"출판처 {v.get('id')}: jif 는 저널에만, 숫자로, jif_year(JCR 판 연도)와 함께")
+        if v.get("jif_q") not in (None, "Q1", "Q2", "Q3", "Q4") or (v.get("jif_q") and v.get("jif") is None):
+            errors.append(f"출판처 {v.get('id')}: jif_q 는 Q1~Q4, jif 와 함께")
         if v.get("pin") not in (None, True):
             errors.append(f"출판처 {v.get('id')}: pin 은 true 만")
     seen = {}
@@ -170,7 +172,9 @@ def venue_section(v, ps, tax):
         cls = "ks ks1" if v["kiise"] == "최우수" else "ks"
         head += f'<span class="{cls}" title="한국정보과학회 (2024) {v["kiise"]}">정보과학회 {v["kiise"]}</span>'
     if v.get("jif") is not None:
-        head += f'<span class="jif" title="JCR {v["jif_year"]} Journal Impact Factor">(IF {v["jif"]:.1f})</span>'
+        q = f', {v["jif_q"]}' if v.get("jif_q") else ""
+        head += (f'<span class="jif" title="JCR {v["jif_year"]} Journal Impact Factor{" · JIF 사분위" if q else ""}">'
+                 f'(IF {v["jif"]:.1f}{q})</span>')
     head += f'<span class="vn">{esc(v.get("name") or "")}</span><span class="vc">{len(ps)}편</span>'
     idattr = "" if v["kind"] == "preprint" else f' id="v-{v["id"]}"'
     body = ""

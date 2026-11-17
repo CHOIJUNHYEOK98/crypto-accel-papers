@@ -29,7 +29,7 @@
      sys_opt: [resident, overlap, multi-gpu]   # 시스템 관점 최적화(다중 GPU·전송 겹치기 등, 없으면 생략)
      focus: MSM 버킷 모으기를 희소 행렬-벡터 곱으로 바꾼 병렬 MSM   # 핵심 아이디어나 대상 한 줄
    ```
-. 새 출판처면 `data/venues.yml` 에 먼저 더한다. 학회는 [CS 분야 우수 학술대회 목록](https://gist.github.com/Pusnow/6eb933355b5cb8d31ef1abcb3c3e1206)에 실린 곳만 싣고, 그 표의 BK21플러스 IF (2018) 점수(`bk21`)와 한국정보과학회 (2024) 등급(`kiise`)을 적는다. 저널은 BK21·정보과학회 칸을 비우고, 대신 Clarivate JCR 의 2년 Impact Factor(`jif`)와 그 JCR 판 연도(`jif_year`)를 적는다(확인하지 못하면 비운다). 페이지는 학회를 소분류 안에서 BK21 점수 → 정보과학회 등급 순으로, 저널을 `pin: true`(TCHES) → IF 높은 순으로 정렬한다.
+. 새 출판처면 `data/venues.yml` 에 먼저 더한다. 학회는 [CS 분야 우수 학술대회 목록](https://gist.github.com/Pusnow/6eb933355b5cb8d31ef1abcb3c3e1206)에 실린 곳만 싣고, 그 표의 BK21플러스 IF (2018) 점수(`bk21`)와 한국정보과학회 (2024) 등급(`kiise`)을 적는다. 저널은 BK21·정보과학회 칸을 비우고, 대신 Clarivate JCR 의 2년 Impact Factor(`jif`)와 그 JCR 판 연도(`jif_year`), JIF 사분위(`jif_q`, 분야가 여럿이면 가장 높은 것)를 적는다(확인하지 못하면 비운다). 페이지는 학회를 소분류 안에서 BK21 점수 → 정보과학회 등급 순으로, 저널을 `pin: true`(TCHES) → IF 높은 순으로 정렬한다.
 3. 페이지를 다시 만든다.
 
    ```sh

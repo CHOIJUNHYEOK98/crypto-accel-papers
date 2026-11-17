@@ -1,7 +1,7 @@
 # 출판처 목록 — 소분류(group)는 적힌 순서대로 페이지에 나온다. 학회는 같은 소분류 안에서 bk21 → kiise 높은 순으로 생성기가 정렬한다(동점은 적힌 순서).
 # id: 논문의 venue 칸이 가리키는 이름 / kind: conference·journal·preprint
 # group: 학회·저널 안의 소분류 제목(페이지의 작은 제목) / bk21: BK21플러스 IF (2018) 점수 / kiise: 한국정보과학회 (2024) 등급(최우수·우수)
-# 저널만: jif: Clarivate JCR 2년 Journal Impact Factor / jif_year: 그 JCR 판 연도(2025 = 2026년 6월 공개판) / pin: true 면 같은 소분류 맨 위 고정. 저널은 소분류 안에서 pin → jif 높은 순(jif 없으면 뒤)으로 생성기가 정렬한다.
+# 저널만: jif: Clarivate JCR 2년 Journal Impact Factor / jif_year: 그 JCR 판 연도(2025 = 2026년 6월 공개판) / jif_q: JCR JIF 사분위(분야가 여럿이면 가장 높은 것) / pin: true 면 같은 소분류 맨 위 고정. 저널은 소분류 안에서 pin → jif 높은 순(jif 없으면 뒤)으로 생성기가 정렬한다.
 # 학회는 CS 분야 우수 학술대회 목록(https://gist.github.com/Pusnow/6eb933355b5cb8d31ef1abcb3c3e1206)에 실린 곳만 싣는다.
 - id: asplos
   abbr: ASPLOS
@@ -162,6 +162,7 @@
   group: 주요 저널
   jif: 5.9
   jif_year: 2025
+  jif_q: Q1
 - id: tc
   abbr: IEEE TC
   name: IEEE Transactions on Computers
@@ -169,6 +170,7 @@
   group: 주요 저널
   jif: 4.9
   jif_year: 2025
+  jif_q: Q2
 - id: tifs
   abbr: IEEE TIFS
   name: IEEE Transactions on Information Forensics and Security
@@ -176,6 +178,7 @@
   group: 주요 저널
   jif: 8.7
   jif_year: 2025
+  jif_q: Q1
 - id: tdsc
   abbr: IEEE TDSC
   name: IEEE Transactions on Dependable and Secure Computing
@@ -183,6 +186,7 @@
   group: 주요 저널
   jif: 6.8
   jif_year: 2025
+  jif_q: Q1
 - id: iotj
   abbr: IEEE IoT-J
   name: IEEE Internet of Things Journal
@@ -190,6 +194,7 @@
   group: 주요 저널
   jif: 8.7
   jif_year: 2025
+  jif_q: Q1
 - id: taco
   abbr: ACM TACO
   name: ACM Transactions on Architecture and Code Optimization
@@ -197,6 +202,7 @@
   group: 주요 저널
   jif: 2.9
   jif_year: 2025
+  jif_q: Q2
 - id: access
   abbr: IEEE Access
   name: ''
@@ -204,6 +210,7 @@
   group: 기타 저널
   jif: 4.2
   jif_year: 2025
+  jif_q: Q2
 - id: les
   abbr: IEEE ESL
   name: IEEE Embedded Systems Letters
@@ -211,6 +218,7 @@
   group: 기타 저널
   jif: 1.7
   jif_year: 2025
+  jif_q: Q4
 - id: tcas-i
   abbr: IEEE TCAS-I
   name: 'IEEE Transactions on Circuits and Systems I: Regular Papers'
@@ -218,6 +226,7 @@
   group: 기타 저널
   jif: 5.6
   jif_year: 2025
+  jif_q: Q1
 - id: ieee-micro
   abbr: IEEE Micro
   name: IEEE Micro (학술지)
@@ -225,6 +234,7 @@
   group: 기타 저널
   jif: 4.4
   jif_year: 2025
+  jif_q: Q2
 - id: cluster-comput
   abbr: Cluster Computing
   name: Cluster Computing (Springer 학술지)
@@ -232,6 +242,7 @@
   group: 기타 저널
   jif: 5.5
   jif_year: 2025
+  jif_q: Q1
 - id: springer-cybersecurity
   abbr: Cybersecurity
   name: Cybersecurity (SpringerOpen 학술지)
@@ -239,6 +250,7 @@
   group: 기타 저널
   jif: 4.1
   jif_year: 2025
+  jif_q: Q2
 - id: jksucis
   abbr: JKSU-CIS
   name: Journal of King Saud University – Computer and Information Sciences
@@ -246,6 +258,7 @@
   group: 기타 저널
   jif: 6.4
   jif_year: 2025
+  jif_q: Q1
 - id: mdpi-mathematics
   abbr: Mathematics (MDPI)
   name: ''
@@ -253,6 +266,7 @@
   group: 기타 저널
   jif: 2.3
   jif_year: 2025
+  jif_q: Q1
 - id: jpdc
   abbr: JPDC
   name: Journal of Parallel and Distributed Computing
@@ -260,6 +274,7 @@
   group: 기타 저널
   jif: 3.4
   jif_year: 2025
+  jif_q: Q2
 - id: jsa
   abbr: JSA
   name: Journal of Systems Architecture
@@ -267,6 +282,7 @@
   group: 기타 저널
   jif: 5.3
   jif_year: 2025
+  jif_q: Q1
 - id: integration
   abbr: INTEGRATION
   name: Integration, the VLSI Journal
@@ -274,6 +290,7 @@
   group: 기타 저널
   jif: 2.6
   jif_year: 2025
+  jif_q: Q3
 - id: preprint
   abbr: ePrint · arXiv
   name: ''
