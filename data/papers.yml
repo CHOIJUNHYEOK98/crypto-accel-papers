@@ -1524,3 +1524,15 @@
   focus: 'Pippenger MSM 의 버킷 모으기를 병렬 접두 합으로 줄이고 데이터 크기별 묶음 크기 범위 제시'
   device: gpu
   url: https://doi.org/10.1109/icpads60453.2023.00013
+
+- title: 'HALO: Loop-aware Bootstrapping Management for Fully Homomorphic Encryption'
+  authors: [Seonyoung Cheon, Yongwoo Lee, Hoyun Youm, Dongkwan Kim, Sungwoo Yun, K. K. Jeong, Dongyoon Lee, Hanjun Kim]
+  year: 2025
+  venue: asplos
+  field: fhe
+  scheme: [ckks]
+  ops: [bootstrap, app]
+  gpu_partial: true
+  focus: '반복문을 고려해 부트스트래핑 위치·수준을 정하는 동형암호 컴파일러 — HEaaN GPU 판으로 평가'
+  device: gpu
+  url: https://doi.org/10.1145/3669940.3707275
