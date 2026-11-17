@@ -213,7 +213,7 @@ def render(venues, papers, tax):
              + f'<tr class="total"><th>합계</th>{cells(total)}</tr></tbody></table></div>')
     kpis = f"      <span>전체 <b>{len(papers)}</b>편</span>\n" + "\n".join(
         f'      <span><i class="dot d-{k}"></i>{h} <b>{total[k]}</b></span>' for k, _, h in FIELDS[:3])
-    guide = ('  <details class="guide" id="guide"><summary><h2>방식·연산·최적화 표시 안내</h2>'
+    guide = ('  <details class="fold guide" id="guide"><summary><h2>방식·연산·최적화 표시 안내</h2>'
              '<span class="hint">방식별 부하 연산·양자 내성·시스템 관점 최적화 표 — 눌러서 펼치기</span></summary>'
              '<p class="lead">논문마다 구현·평가한 방식(색 테두리), 가속한 연산(회색 바탕), 시스템 관점 최적화(점선 테두리), '
              '핵심 아이디어(아래 줄)를 적었습니다. 여러 방식으로 평가한 논문은 방식을 여럿 적었습니다. '
